@@ -24,7 +24,7 @@
      [bootstrap/nav-item {:title "Change region"
                           :on-click #(swap! regions/region-state dissoc :region)}
       (get-in @regions/region-state [:region :name])]
-     [bootstrap/button {:title "Start over" :bs-style :danger
+     [bootstrap/nav-item {:title "Start over" :bs-style :danger
                         :on-click tool/start-over} "Start over"]]]
    [:div.container
    [:div#main
