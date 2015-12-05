@@ -6,10 +6,10 @@
 
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [ring-server "0.4.0"]
-                 [reagent "0.5.1"
-                  :exclusions [org.clojure/tools.reader]]
+                 [org.clojars.atroche/reagent "0.6.0-SNAPSHOT" :exclusions [org.clojure/tools.reader]]
                  [reagent-forms "0.5.13"]
                  [reagent-utils "0.1.5"]
+                 [cljsjs/react-bootstrap "0.27.3-0"]
                  [ring "1.4.0"]
                  [ring/ring-defaults "0.1.5"]
                  [bk/ring-gzip "0.1.1"]

@@ -3,8 +3,6 @@
             [ring.util.http-response :refer :all]))
 
 
-
-
 (defroutes* ikea-routes
   (GET* "/regions" []
         (ok [{:name "Australia"
