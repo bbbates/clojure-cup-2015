@@ -22,7 +22,9 @@ body {
   background-position: right bottom, bottom left;
 }
 
-#wrap {min-height: 100%;}
+#wrap {
+  min-height: 100%;
+}
 
 #main {
   overflow: auto;
@@ -147,11 +149,9 @@ You also need to include this conditional style in the <head> of your HTML file 
       }
 
       #search-results {
-        left: 1em;
-        top: 1em;
+        position: static;
         max-width: 100%;
         width: 100%;
-        overflow: scroll;
         ul {
           list-style: none;
           .make-row();
@@ -181,9 +181,7 @@ You also need to include this conditional style in the <head> of your HTML file 
               }
             }
           }
-
         }
-
       }
     }
 

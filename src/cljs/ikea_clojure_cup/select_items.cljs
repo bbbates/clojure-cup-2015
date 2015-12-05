@@ -8,6 +8,8 @@
             [ikea-clojure-cup.bootstrap :as bootstrap])
   (:require-macros [ikea-clojure-cup.client-macros :refer [debounce]]))
 
+(def number-search-results 6)
+
 (defn- fetch-search-results
   [term]
   (let [data-ch (async/chan)
@@ -16,7 +18,7 @@
          {:params {:region (:code region)
                    :lang (:lang region)
                    :query term}
-          :handler (fn [resp] (async/put! data-ch (take 15 resp)))})
+          :handler (fn [resp] (async/put! data-ch (take number-search-results resp)))})
     data-ch))
 
 (defn item-preview
