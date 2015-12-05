@@ -23,9 +23,8 @@
    [:html
     [:head
      [:meta {:charset "utf-8"}]
-     [:meta {:name "viewport"
-             :content "width=device-width, initial-scale=1"}]
-     (include-css (if (env :dev) "css/site.css" "css/site.min.css"))]
+     [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
+     (include-css (if (env :dev) "css/ikea-helper.css" "css/ikea-helper.min.css"))]
     [:body
      mount-target
      (include-js "js/app.js")]]))
