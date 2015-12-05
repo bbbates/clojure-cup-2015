@@ -6,8 +6,8 @@
 
 (defn- multiple-vehicle-entry
   [car-state-fn]
-
-  )
+  [bootstrap/panel {:header "You and which army?"}
+   [:p "This feature is coming soon..."]])
 
 (defn- single-vehicle-entry
   [single-state]
@@ -36,7 +36,6 @@
   [vehicles]
   (every?
    (fn [{:keys [width height depth] :as v}]
-     (println v (and width height depth))
      (and width height depth))
    vehicles))
 
