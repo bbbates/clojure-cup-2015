@@ -51,7 +51,8 @@
     (fn [_ _]
       [:section.enter-car-info
        [:heading
-        [:h2 "Step 2" [:small "Tell us about your transportation fleet"]]]
+        [:h2 "Step 2"]
+        [:h3 "Tell us about your transportation fleet"]]
        [:main.select-items-content
         [bootstrap/nav {:bs-style :pills :active-key @mode :on-select #(reset! mode %)}
          [bootstrap/nav-item {:event-key 0} "Only one vehicle"]
@@ -61,10 +62,11 @@
           0 [single-vehicle-entry (reagent/cursor (partial vehicle-get car-state) 0)]
           1 [multiple-vehicle-entry (partial vehicle-get car-state)])]
        [:footer
+        [bootstrap/button-toolbar
         [bootstrap/button {:bs-size :lg
                            :bs-style :danger
                            :on-click #(swap! car-state assoc :vehicles [])} "Reset fleet"]
         [bootstrap/button {:bs-size :lg
                            :bs-style :primary
                            :disabled (not (enough-data? (:vehicles @car-state)))
-                           :on-click progress-fn} "Will it fit?"]]])))
+                           :on-click progress-fn} "Will it fit?"]]]])))

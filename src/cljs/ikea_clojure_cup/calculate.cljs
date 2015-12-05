@@ -15,8 +15,9 @@
 (defn- calculate-view*
   [all-state progress-fn]
   [:section.enter-car-info
-   [:heading
-    [:h2 "Calculating..."]]])
+   [:heading.center
+    [:h2 "Calculating ..."]
+    [:img.rotating-image {:src "img/allanKey.png"}]]])
 
 (defn- calculate-view
   [all-state progress-fn]

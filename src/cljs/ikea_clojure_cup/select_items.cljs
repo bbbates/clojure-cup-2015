@@ -104,7 +104,8 @@
   [trolley-state progress-fn]
   [:section.select-items
    [:heading
-    [:h2 "Step 1" [:small "Enter your IKEA shopping list"]]]
+    [:h2 "Step 1"]
+    [:h3 "Enter your IKEA shopping list"]]
    [:main.select-items-content
     [:div.search
      [item-search trolley-state]
