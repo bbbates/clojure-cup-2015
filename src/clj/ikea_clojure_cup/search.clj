@@ -41,7 +41,8 @@
   (get-content m "ikea-product-pricetag-name"))
 
 (defn- get-product-desc [m]
-  (get-content m "ikea-product-pricetag-desc"))
+  (let [d (cs/trim (get-content m "ikea-product-pricetag-desc"))]
+    (subs d 0 (- (count d) 1))))
 
 (defn- get-hick-products [site-htree]
   (s/select (s/child (s/id "search-list")
