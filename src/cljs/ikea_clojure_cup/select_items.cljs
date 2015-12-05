@@ -33,7 +33,7 @@
     [bootstrap/glyph {:glyph :plus}] " Add to trolley"]])
 
 (defn select-item!
-  [trolley-state item]
+  [search-state trolley-state item]
   (let [region (:region @region-state)]
     (GET "/ikea/product"
          {:params {:region (:code region)
@@ -41,7 +41,8 @@
                    :product-context (:product-context item)
                    :product-id (:id item)}
           :handler (fn [resp]
-                     (swap! trolley-state assoc ::selected-item (assoc item :packages resp)))})))
+                     (swap! search-state assoc ::selected-item (assoc item :packages resp))
+                     (swap! trolley-state update-in [:items] conj (::selected-item @search-state)))})))
 
 (defn item-search
   [trolley-state]
@@ -57,8 +58,7 @@
               :item-class "typeahead-item"
               :highlight-class "highlighted"
               :result-fn item-preview
-              :choice-fn (partial select-item! search-state)
-              :addons (partial add-item-button search-state trolley-state)}]
+              :choice-fn (partial select-item! search-state trolley-state)}]
        search-state])))
 
 (defn trolley-list-contents

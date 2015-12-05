@@ -16,8 +16,8 @@
    [tool/tool-view]])
 
 (defn current-page []
-  [:div
-  [:div.container
+  [:div#wrap.container
+  [:div#main
    [bootstrap/nav-bar
     [bootstrap/nav-bar-brand
      [:a {:title "IKEA" :href "/"} "IKEA"]]
@@ -28,7 +28,11 @@
      [bootstrap/button {:title "Start over" :bs-style :danger
                         :on-click tool/start-over} "Start over"]]]
    [(session/get :current-page)]]
-  [:footer.footer [:sup "©"]  [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd"]]])
+  [:div#footer
+   [:sup "© "]
+   [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd B.V 2010"]
+   [:div.serial-text.pull-right "AA-498638-1"]
+   [:div.serial-number.pull-right (first (shuffle (range 10000 20000)))]]])
 
 ;; -------------------------
 ;; Routes
