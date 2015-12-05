@@ -1,11 +1,11 @@
 (ns ikea-clojure-cup.core
-    (:require [reagent.core :as reagent :refer [atom]]
-              [reagent.session :as session]
-              [secretary.core :as secretary :include-macros true]
-              [accountant.core :as accountant]
-              [ikea-clojure-cup.regions :as regions]
-              [ikea-clojure-cup.tool :as tool]
-              [ikea-clojure-cup.bootstrap :as bootstrap]))
+  (:require [reagent.core :as reagent :refer [atom]]
+            [reagent.session :as session]
+            [secretary.core :as secretary :include-macros true]
+            [accountant.core :as accountant]
+            [ikea-clojure-cup.regions :as regions]
+            [ikea-clojure-cup.tool :as tool]
+            [ikea-clojure-cup.bootstrap :as bootstrap]))
 
 ;; -------------------------
 ;; Views
@@ -25,15 +25,15 @@
                           :on-click #(swap! regions/region-state dissoc :region)}
       (get-in @regions/region-state [:region :name])]
      [bootstrap/nav-item {:title "Start over" :bs-style :danger
-                        :on-click tool/start-over} "Start over"]]]
+                          :on-click tool/start-over} "Start over"]]]
    [:div.container
-   [:div#main
-   [(session/get :current-page)]]
-  [:div#footer
-   [:sup "© "]
-   [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd B.V 2010"]
-   [:div.serial-text.pull-right "AA-498638-1"]
-   [:div.serial-number.pull-right (first (shuffle (range 10000 20000)))]]]])
+    [:div#main
+     [(session/get :current-page)]]
+    [:div#footer
+     [:sup "© "]
+     [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd B.V 2010"]
+     [:div.serial-text.pull-right "AA-498638-1"]
+     [:div.serial-number.pull-right (first (shuffle (range 10000 20000)))]]]])
 
 ;; -------------------------
 ;; Routes

@@ -89,16 +89,17 @@
 (defn trolley-list-contents
   [trolley-state]
   [:div.trolley-contents
-   (if (empty? (:items @trolley-state))
-     [:em "Nothing in your trolley, yet!"]
-     [bootstrap/list-group {:component-class :ul}
+   [bootstrap/list-group {:component-class :ul}
+    (if (empty? (:items @trolley-state))
+      [bootstrap/list-group-item {:key 0 :list-item true}
+       [:em "Nothing in your trolley, yet!"]]
       (map-indexed
        (fn [idx item]
          ^{:key idx}
          [trolley-item idx item
           (partial remove-item-from-trolley trolley-state idx)
           #(swap! trolley-state update-in [:items] conj item)])
-       (:items @trolley-state))])])
+       (:items @trolley-state)))]])
 
 (defn select-items-view
   [trolley-state progress-fn]
