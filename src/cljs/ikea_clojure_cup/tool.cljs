@@ -40,7 +40,7 @@
   [calc/calculate-view all-state (partial progress! all-state)])
 
 (defmethod tool-stage-view :pack-it-result [_ all-state]
-  [pack-it/pack-it-view (reagent/cursor all-state [:results]) (partial progress! all-state)])
+  [pack-it/pack-it-view all-state (partial progress! all-state) #(swap! all-state assoc :state :calculate)])
 
 (defn dismissable-introduction
   []
