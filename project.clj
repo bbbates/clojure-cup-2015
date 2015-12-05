@@ -21,8 +21,7 @@
                  [venantius/accountant "0.1.5"
                   :exclusions [org.clojure/tools.reader]]
                  [hickory "0.5.4"]
-
-                 ]
+                 [http-kit "2.1.18"]]
 
   :plugins [[lein-environ "1.0.1"]
             [lein-cljsbuild "1.1.1"]
