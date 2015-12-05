@@ -22,9 +22,11 @@
     [bootstrap/nav-bar-brand
      [:a {:title "IKEA" :href "/"} "IKEA"]]
     [bootstrap/nav {:pull-right true}
-       [bootstrap/nav-item {:title "Change region"
-                            :on-click #(swap! regions/region-state dissoc :region)}
-        (get-in @regions/region-state [:region :name])]]]
+     [bootstrap/nav-item {:title "Change region"
+                          :on-click #(swap! regions/region-state dissoc :region)}
+      (get-in @regions/region-state [:region :name])]
+     [bootstrap/button {:title "Start over" :bs-style :danger
+                        :on-click tool/start-over} "Start over"]]]
    [(session/get :current-page)]]
   [:footer.footer [:sup "©"]  [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd"]]])
 

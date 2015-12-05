@@ -7,10 +7,16 @@
             [ikea-clojure-cup.calculate :as calc]
             [ikea-clojure-cup.pack-it :as pack-it]))
 
-(defonce tool-state (local-storage (atom {:state :select-items
-                                          :trolley {:items []}
-                                          :fleet {:vehicles []}})
-                                   :tool))
+(def default-state
+  {:state :select-items
+   :trolley {:items []}
+   :fleet {:vehicles []}})
+
+(defonce tool-state (local-storage (atom (assoc default-state :shown-intro? false)) :tool))
+
+(defn start-over
+  []
+  (swap! tool-state merge default-state))
 
 (defn progress!
   [tool-state]
