@@ -4,12 +4,15 @@
             [reagent.core :as reagent :refer [atom]]
             [reagent-forms.core :refer [bind-fields]]
             [ikea-clojure-cup.autocomplete]
+            [ikea-clojure-cup.regions :refer [region-state]]
             [ikea-clojure-cup.bootstrap :as bootstrap])
   (:require-macros [ikea-clojure-cup.client-macros :refer [debounce]]))
 
 (defn- fetch-search-results
-  [region term]
-  (let [data-ch (async/chan)]
+  [term]
+  (let [data-ch (async/chan)
+        region (:region @region-state)]
+    (println "1 >>>>>>" region)
     (GET "/ikea/search"
          {:params {:region (:code region)
                    :lang (:lang region)
@@ -24,10 +27,10 @@
    [:p desc]])
 
 (defn add-item-button
-  [trolley-state]
+  [search-state trolley-state]
   [:div.input-group-btn
    [bootstrap/button
-    {:on-click #(swap! trolley-state update-in [:items] conj (::selected-item @trolley-state))}
+    {:on-click #(swap! trolley-state update-in [:items] conj (::selected-item @search-state))}
     [bootstrap/glyph {:glyph :plus}] " Add to trolley"]])
 
 (defn select-item!
@@ -35,20 +38,22 @@
   (swap! trolley-state assoc ::selected-item item))
 
 (defn item-search
-  [region trolley-state]
-  [bind-fields
-      [:div {:field :autocomplete
-             :id :term
-             :input-placeholder "Search for IKEA Product by Name or Department"
-             :data-source (partial fetch-search-results region)
-             :input-class "form-control"
-             :list-class "typeahead-list"
-             :item-class "typeahead-item"
-             :highlight-class "highlighted"
-             :result-fn item-preview
-             :choice-fn (partial select-item! trolley-state)
-             :addons (partial add-item-button trolley-state)}]
-      trolley-state])
+  [trolley-state]
+  (let [search-state (atom {})]
+    (fn []
+      [bind-fields
+       [:div {:field :autocomplete
+              :id :term
+              :input-placeholder "Search for IKEA Product by Name or Department"
+              :data-source fetch-search-results
+              :input-class "form-control"
+              :list-class "typeahead-list"
+              :item-class "typeahead-item"
+              :highlight-class "highlighted"
+              :result-fn item-preview
+              :choice-fn (partial select-item! search-state)
+              :addons (partial add-item-button search-state trolley-state)}]
+       search-state])))
 
 (defn trolley-list-contents
   [trolley-state]
@@ -62,13 +67,13 @@
        (:items @trolley-state))])])
 
 (defn select-items-view
-  [region trolley-state]
+  [trolley-state]
   [:section.select-items
    [:heading
     [:h2 "Step 1" [:small "Enter your IKEA shopping list"]]]
    [:main.select-items-content
     [:div.search
-     [item-search region trolley-state]
+     [item-search trolley-state]
      [trolley-list-contents trolley-state]]
     [:div.preview]]
    [:footer
