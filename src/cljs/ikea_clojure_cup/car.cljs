@@ -67,4 +67,4 @@
         [bootstrap/button {:bs-size :lg
                            :bs-style :primary
                            :disabled (not (enough-data? (:vehicles @car-state)))
-                           :on-click #(println @car-state)} "Will it fit?"]]])))
+                           :on-click progress-fn} "Will it fit?"]]])))
