@@ -50,6 +50,6 @@
    {:format {:formats [:transit-json]}}
    (middlewares [(wrap-gzip)
                  (wrap-exceptions)
-                 (wrap-defaults site-defaults)
+                 (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))
                  (wrap-reload)]
                 ikea-routes)))
