@@ -61,6 +61,26 @@
               :choice-fn (partial select-item! search-state trolley-state)}]
        search-state])))
 
+(defn trolley-item
+  [idx {:keys [desc name image-src packages id]} remove-fn add-another-fn]
+  [:li {:key idx}
+   name desc
+   [:div.item-actions
+    [bootstrap/button {:bs-size :xs
+                       :bs-style :success
+                       :on-click add-another-fn}
+     [bootstrap/glyph {:glyph :plus}] " Add another"]
+    [bootstrap/button {:bs-size :xs
+                       :bs-style :danger
+                       :on-click remove-fn}
+     [bootstrap/glyph {:glyph :remove}] " Remove"]]])
+
+(defn- remove-item-from-trolley
+  [trolley-state idx]
+  (let [items (:items @trolley-state)]
+    (swap! trolley-state assoc-in [:items]
+           (concat (take idx items) (last (split-at (inc idx) items))))))
+
 (defn trolley-list-contents
   [trolley-state]
   [:div.trolley-contents
@@ -69,7 +89,9 @@
      [:ul
       (map-indexed
        (fn [idx item]
-         [:li {:key idx} (:name item) (:desc item)])
+         [trolley-item idx item
+          (partial remove-item-from-trolley trolley-state idx)
+          #(swap! trolley-state update-in [:items] conj item)])
        (:items @trolley-state))])])
 
 (defn select-items-view
@@ -83,10 +105,11 @@
      [trolley-list-contents trolley-state]]
     [:div.preview]]
    [:footer
+    [bootstrap/button-toolbar
     [bootstrap/button {:bs-size :lg
                        :bs-style :danger
                        :on-click #(swap! trolley-state assoc :items [])} "Clear trolley"]
     [bootstrap/button {:bs-size :lg
                        :bs-style :primary
                        :disabled (empty? (:items @trolley-state))
-                       :on-click progress-fn} "Continue"]]])
+                       :on-click progress-fn} "Continue"]]]])
