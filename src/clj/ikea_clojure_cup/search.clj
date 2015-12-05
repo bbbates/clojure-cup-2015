@@ -69,6 +69,7 @@
 (comment
   (search "au" "billy"))
 
+(comment
 (def products-sample
 {:type :document,
  :content
@@ -3494,4 +3495,5 @@
       "\r\n"
       "\r\n"
       "\r\n"]}]}]}
+)
 )
