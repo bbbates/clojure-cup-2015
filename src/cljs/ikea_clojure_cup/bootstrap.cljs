@@ -30,3 +30,6 @@
 (def panel (reagent/adapt-react-class js/ReactBootstrap.Panel))
 (def list-group (reagent/adapt-react-class js/ReactBootstrap.ListGroup))
 (def list-group-item (reagent/adapt-react-class js/ReactBootstrap.ListGroupItem))
+
+(def pop-over (reagent/adapt-react-class js/ReactBootstrap.Popover))
+(def overlay (reagent/adapt-react-class js/ReactBootstrap.Overlay))

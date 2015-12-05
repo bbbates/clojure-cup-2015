@@ -102,6 +102,7 @@ You also need to include this conditional style in the <head> of your HTML file 
       .trolley-contents {
         ul {
           li {
+            list-style: none;
             > div {
               .make-row();
               .contents {
@@ -122,6 +123,46 @@ You also need to include this conditional style in the <head> of your HTML file 
             }
           }
         }
+      }
+
+      #search-results {
+        left: 1em;
+        top: 1em;
+        max-width: 100%;
+        width: 100%;
+        overflow: scroll;
+        ul {
+          list-style: none;
+          .make-row();
+          li {
+            .make-xs-column(4);
+            padding-left: 0.3em;
+            padding-right: 0.3em;
+
+            .thumbnail {
+              img {
+                height: 15%;
+              }
+              .caption {
+                text-align: center;
+              }
+            }
+
+            &.selected {
+              .thumbnail {
+                .box-shadow(0 6px 12px rgba(0,0,0,.175));
+                background-color: @btn-primary-bg;
+
+                .caption {
+                  color: @btn-primary-color;
+                  text-align: center;
+                }
+              }
+            }
+          }
+
+        }
+
       }
     }
 
