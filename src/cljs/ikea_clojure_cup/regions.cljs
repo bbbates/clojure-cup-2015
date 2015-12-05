@@ -17,7 +17,7 @@
      [bind-fields
       [bootstrap/input {:id :sel-region :field :list :type "select"}
        (for [region all-regions]
-         [:option {:key (:code region) :value region} (:name region)])]
+         [:option {:key region :value region} (:name region)])]
       region-state]]
     [:span.loading "Fetching available regions..."]))
 

@@ -22,6 +22,7 @@
                  [secretary "1.2.3"]
                  [venantius/accountant "0.1.5" :exclusions [org.clojure/tools.reader]]
                  [cljs-ajax "0.5.1"]
+                 [org.clojure/core.async "0.2.374"]
                  [hickory "0.5.4"]
                  [http-kit "2.1.18"]]
 
@@ -134,6 +135,7 @@
                        :env {:production true}
                        :aot :all
                        :omit-source true
+                       :auto-clean false
                        :cljsbuild {:jar true
                                    :builds {:app
                                             {:source-paths ["env/prod/cljs"]

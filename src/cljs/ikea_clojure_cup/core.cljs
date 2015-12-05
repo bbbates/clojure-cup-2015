@@ -4,7 +4,8 @@
               [secretary.core :as secretary :include-macros true]
               [accountant.core :as accountant]
               [alandipert.storage-atom :refer [local-storage]]
-              [ikea-clojure-cup.regions :as regions]))
+              [ikea-clojure-cup.regions :as regions]
+              [ikea-clojure-cup.tool :as tool]))
 
 (def region-state (local-storage (atom {:region nil}) :region))
 
@@ -14,8 +15,7 @@
 (defn home-page []
   [:div
    [regions/region-modal region-state]
-   [:div [:h2 "Welcome to ikea-clojure-cup"]
-    [:div [:a {:href "/about"} "go to about page"]]]])
+   [tool/tool-view (:region @region-state)]])
 
 (defn current-page []
   [:div
