@@ -66,6 +66,7 @@
   [:li {:key idx}
    name desc
    [:div.item-actions
+    [bootstrap/button-toolbar
     [bootstrap/button {:bs-size :xs
                        :bs-style :success
                        :on-click add-another-fn}
@@ -73,7 +74,7 @@
     [bootstrap/button {:bs-size :xs
                        :bs-style :danger
                        :on-click remove-fn}
-     [bootstrap/glyph {:glyph :remove}] " Remove"]]])
+     [bootstrap/glyph {:glyph :remove}] " Remove"]]]])
 
 (defn- remove-item-from-trolley
   [trolley-state idx]
