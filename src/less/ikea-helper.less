@@ -3,6 +3,10 @@
 @import 'vendors/bootstrap/bootstrap.less';
 @import 'variables.less';
 
+body {
+    background-image: url("../img/background.jpg");
+    background-repeat: repeat;
+}
 .loading {
   padding-left: 3em;
   background-image: url("@{loading-img}");
@@ -16,5 +20,11 @@
 
 .intro:extend(.alert, .alert-info, .alert-dismissable) {
 
+}
+
+.footer {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  text-align: center;
 }
 
