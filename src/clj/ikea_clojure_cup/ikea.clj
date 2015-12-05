@@ -3,7 +3,8 @@
             [schema.core :as s]
             [ring.util.http-response :refer :all]
             [ikea-clojure-cup.search :as search]
-            [ikea-clojure-cup.product :as product]))
+            [ikea-clojure-cup.product :as product]
+            [ikea-clojure-cup.pack :as pack]))
 
 
 (defroutes* ikea-routes
@@ -21,4 +22,7 @@
                        product-id :- s/Str
                        region :- s/Str
                        lang :- s/Str]
-        (ok (product/product region lang product-context product-id))))
+        (ok (product/product region lang product-context product-id)))
+
+  (GET* "/pack" []
+        (ok (pack/pack pack/sample-param))))
