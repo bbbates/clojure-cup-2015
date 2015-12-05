@@ -9,7 +9,8 @@
             [hiccup.page :refer [include-js include-css]]
             [prone.middleware :refer [wrap-exceptions]]
             [ring.middleware.reload :refer [wrap-reload]]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [ikea-clojure-cup.ikea :as ikea]))
 
 (def mount-target
   [:div#app
@@ -42,6 +43,7 @@
   (GET "/" [] loading-page)
   (GET "/about" [] loading-page)
   (GET "/cards" [] cards-page)
+  (context* "/ikea" [] ikea/ikea-routes)
   (resources "/")
   (compojure/not-found "Not Found"))
 
