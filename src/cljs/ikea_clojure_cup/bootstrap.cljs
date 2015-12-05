@@ -20,3 +20,6 @@
 (def grid (reagent/adapt-react-class js/ReactBootstrap.Grid))
 (def row (reagent/adapt-react-class js/ReactBootstrap.Row))
 (def col (reagent/adapt-react-class js/ReactBootstrap.Col))
+
+(def nav (reagent/adapt-react-class js/ReactBootstrap.Nav))
+(def nav-item (reagent/adapt-react-class js/ReactBootstrap.NavItem))
