@@ -3,11 +3,13 @@
             [clojure.pprint :refer [pprint]]
             [clojure.string :as cs]
             [clojure.data.json :as json]))
-(comment
+
+;; (comment
   (def sample-param
     {:bins [{:id "car" :depth 5 :weight 5 :height 5}]
-     :packages [{:id "11" :depth 10 :weight 10 :height 10}
-                {:id "22" :depth 2 :weight 2 :height 2}]}))
+     :packages [{:id "blah" :depth 10 :weight 10 :height 10}
+                {:id "22" :depth 2 :weight 2 :height 2}]})
+;;   )
 
 (defn bin->string [{:keys [id depth weight height]}]
   (format "%s:0:%sx%sx%s" id depth weight height))
