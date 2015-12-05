@@ -2,7 +2,8 @@
   (:require [reagent.core :refer [atom]]
             [reagent-forms.core :refer [init-field value-of]]
             [cljs.core.async :as async]
-            [clojure.string :refer [split trim]])
+            [clojure.string :refer [split trim]]
+            [ikea-clojure-cup.bootstrap :as bootstrap])
   (:require-macros [reagent-forms.macros :refer [render-element]]
                    [cljs.core.async.macros :refer [go]]
                    [ikea-clojure-cup.client-macros :refer [debounce]]))
@@ -67,21 +68,25 @@
                                                  "default"))}]
                       (when addons [addons])]
 
-                     [:ul {:style {:display (if (or (empty? @selections) @typeahead-hidden?) :none :block) }
-                           :class list-class
-                           :on-mouse-enter #(reset! mouse-on-list? true)
-                           :on-mouse-leave #(reset! mouse-on-list? false)}
-                      (doall
-                       (map-indexed
-                        (fn [index result]
-                          [:li {:tab-index     index
-                                :key           index
-                                :class         (if (= @selected-index index) highlight-class item-class)
-                                :on-mouse-over #(do
-                                                  (reset! selected-index (js/parseInt (.getAttribute (.-target %) "tabIndex"))))
-                                :on-click      #(do
-                                                  (reset! typeahead-hidden? true)
-                                                  (save! id result)
-                                                  (choice-fn result))}
-                           (result-fn result)])
-                        @selections))]])))
+                     (when-not (or (empty? @selections) @typeahead-hidden?)
+                       [bootstrap/pop-over {:id :search-results
+                                            :placement :bottom
+                                            :title "Search results"
+                                            :container :body}
+                        [:ul {:class list-class
+                              :on-mouse-enter #(reset! mouse-on-list? true)
+                              :on-mouse-leave #(reset! mouse-on-list? false)}
+                         (doall
+                          (map-indexed
+                           (fn [index result]
+                             [:li {:tab-index     index
+                                   :key           index
+                                   :class         (if (= @selected-index index) highlight-class item-class)
+                                   :on-mouse-over #(do
+                                                     (reset! selected-index (js/parseInt (.getAttribute (.-target %) "tabIndex"))))
+                                   :on-click      #(do
+                                                     (reset! typeahead-hidden? true)
+                                                     (save! id result)
+                                                     (choice-fn result))}
+                              (result-fn result)])
+                           @selections))]])])))

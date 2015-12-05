@@ -16,14 +16,13 @@
          {:params {:region (:code region)
                    :lang (:lang region)
                    :query term}
-          :handler (fn [resp] (async/put! data-ch resp))})
+          :handler (fn [resp] (async/put! data-ch (take 15 resp)))})
     data-ch))
 
 (defn item-preview
   [{:keys [id image-src name desc]}]
-  [bootstrap/thumbnail {:src image-src}
-   [:h3 name]
-   [:p desc]])
+  [bootstrap/thumbnail {:src image-src :responsive true :title desc}
+   [:h3 name]])
 
 (defn add-item-button
   [search-state trolley-state]
@@ -56,7 +55,7 @@
               :input-class "form-control"
               :list-class "typeahead-list"
               :item-class "typeahead-item"
-              :highlight-class "highlighted"
+              :highlight-class "selected"
               :result-fn item-preview
               :choice-fn (partial select-item! search-state trolley-state)}]
        search-state])))
