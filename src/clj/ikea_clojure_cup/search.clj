@@ -6,6 +6,16 @@
             [clojure.pprint :refer [pprint]]
             [ikea-clojure-cup.common :refer [ikea-domain]]))
 
+(defn- get-product-context [m]
+  (-> (s/select (s/and (s/tag :a)
+                       (s/attr :href)) m)
+      first
+      :attrs
+      :href
+      (cs/split #"/")
+      reverse
+      second))
+
 (defn- get-product-id [m]
   (-> (s/select (s/and (s/tag :a)
                        (s/attr :href)) m)
@@ -44,7 +54,7 @@
                      :image-src (get-img-src m)
                      :name (get-product-name m)
                      :desc (get-product-desc m)
-                     }))
+                     :product-context (get-product-context m)}))
           []
           hick-products))
 
