@@ -17,6 +17,23 @@
                      (async/put! data-ch resp))})
     data-ch))
 
+(defn item-preview
+  [{:keys [id image-src name desc]}]
+  [bootstrap/thumbnail {:src image-src}
+   [:h3 name]
+   [:p desc]])
+
+(defn add-item-button
+  [trolley-state]
+  [:div.input-group-btn
+   [bootstrap/button
+    {:on-click #(swap! trolley-state update-in [:items] conj (::selected-item @trolley-state))}
+    [bootstrap/glyph {:glyph :plus}] " Add to trolley"]])
+
+(defn select-item!
+  [trolley-state item]
+  (swap! trolley-state assoc ::selected-item item))
+
 (defn select-items-view
   [region trolley-state]
   [:div.select-items
@@ -25,20 +42,24 @@
    [:div.select-items-content
     [:div.search
      [bind-fields
-      [:form
-       [:div {:field :autocomplete
-              :id :term
-              :input-placeholder "Search for IKEA Product by Name or Department"
-              :data-source (partial fetch-search-results region)
-              :input-class "form-control"
-              :list-class "typeahead-list"
-              :item-class "typeahead-item"
-              :highlight-class "highlighted"
-              :result-fn :name
-              :choice-fn :name}]]
+      [:div {:field :autocomplete
+             :id :term
+             :input-placeholder "Search for IKEA Product by Name or Department"
+             :data-source (partial fetch-search-results region)
+             :input-class "form-control"
+             :list-class "typeahead-list"
+             :item-class "typeahead-item"
+             :highlight-class "highlighted"
+             :result-fn item-preview
+             :choice-fn (partial select-item! trolley-state)
+             :addons (partial add-item-button trolley-state)}]
       trolley-state]
-
-     ]
-    [:div.preview]
-
-    ]])
+     [:div.trolley-contents
+      (if (empty? (:items @trolley-state))
+        [:em "Nothing in your trolley, yet!"]
+        [:ul
+          (map-indexed
+           (fn [idx item]
+             [:li {:key idx} (:name item) (:desc item)])
+           (:items @trolley-state))])]]
+    [:div.preview]]])

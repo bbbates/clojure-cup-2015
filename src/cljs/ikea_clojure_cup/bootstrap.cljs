@@ -11,3 +11,12 @@
 (def input (reagent/adapt-react-class js/ReactBootstrap.Input))
 
 (def button (reagent/adapt-react-class js/ReactBootstrap.Button))
+
+(def image (reagent/adapt-react-class js/ReactBootstrap.Image))
+(def thumbnail (reagent/adapt-react-class js/ReactBootstrap.Thumbnail))
+
+(def glyph (reagent/adapt-react-class js/ReactBootstrap.Glyphicon))
+
+(def grid (reagent/adapt-react-class js/ReactBootstrap.Grid))
+(def row (reagent/adapt-react-class js/ReactBootstrap.Row))
+(def col (reagent/adapt-react-class js/ReactBootstrap.Col))

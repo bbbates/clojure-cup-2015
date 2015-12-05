@@ -35,7 +35,7 @@
   [region-state]
   [:div
    [:h3 "Welcome to the Ikea Transport Planner" [:small [:em "(Proper name pending)"]]]
-   [:p "Before you begin, select your closest Ikea region."]])
+   [:p "Before you begin, select your closest IKEA region."]])
 
 (defn region-modal
   [region-state]
