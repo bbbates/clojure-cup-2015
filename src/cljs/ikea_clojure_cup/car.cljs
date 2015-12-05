@@ -12,25 +12,33 @@
 (defn- single-vehicle-entry
   [single-state]
   [:div.single-vehicle-entry
-   [:p [:em "Not much of a fleet..."]]
-   [bind-fields
-    [:form
-     [bootstrap/input {:type :text
-                       :field :numeric
-                       :id :width
-                       :addon-after "cm"
-                       :label "Width of boot/trunk at narrowest point"}]
-     [bootstrap/input {:type :text
-                       :field :numeric
-                       :id :height
-                       :addon-after "cm"
-                       :label "Height of boot/trunk at narrowest point"}]
-     [bootstrap/input {:type :text
-                       :field :numeric
-                       :id :depth
-                       :addon-after "cm"
-                       :label "Depth of boot/trunk from rear of vehicle"}]]
-    single-state]])
+   [bootstrap/panel {:header "One vehicle is not much of a fleet..."}
+    [bind-fields
+     [:form
+      [bootstrap/input {:type :text
+                        :field :numeric
+                        :id :width
+                        :addon-after "cm"
+                        :label "Width of boot/trunk at narrowest point"}]
+      [bootstrap/input {:type :text
+                        :field :numeric
+                        :id :height
+                        :addon-after "cm"
+                        :label "Height of boot/trunk at narrowest point"}]
+      [bootstrap/input {:type :text
+                        :field :numeric
+                        :id :depth
+                        :addon-after "cm"
+                        :label "Depth of boot/trunk from rear of vehicle"}]]
+     single-state]]])
+
+(defn- enough-data?
+  [vehicles]
+  (every?
+   (fn [{:keys [width height depth] :as v}]
+     (println v (and width height depth))
+     (and width height depth))
+   vehicles))
 
 (defn- vehicle-get
   ([car-state idx]
@@ -59,5 +67,5 @@
                            :on-click #(swap! car-state assoc :vehicles [])} "Reset fleet"]
         [bootstrap/button {:bs-size :lg
                            :bs-style :primary
-                           :disabled (empty? (:vehicles @car-state))
+                           :disabled (not (enough-data? (:vehicles @car-state)))
                            :on-click #(println @car-state)} "Will it fit?"]]])))
