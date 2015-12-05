@@ -56,7 +56,7 @@
 
   :minify-assets
   {:assets
-   {"resources/public/css/site.min.css" "resources/public/css/site.css"}}
+   {"resources/public/css/ikea-helper.min.css" "resources/public/css/ikea-helper.css"}}
 
   :cljsbuild {:builds {:app {:source-paths ["src/cljs" "src/cljc"]
                              :compiler {:output-to "target/cljsbuild/public/js/app.js"
