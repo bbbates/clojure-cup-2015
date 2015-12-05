@@ -61,6 +61,20 @@
               :choice-fn (partial select-item! search-state trolley-state)}]
        search-state])))
 
+(defn trolley-item
+  [idx {:keys [desc name image-src packages id]} remove-fn add-another-fn]
+  [:li {:key idx}
+   name desc
+   [bootstrap/button {:bs-size :sm
+                      :bs-style :danger
+                      :on-click remove-fn}
+    [bootstrap/glyph {:glyph :remove}] " Remove"]])
+
+(defn- remove-item-from-trolley
+  [trolley-state item]
+  (swap! trolley-state update-in [:items]
+   (partial remove #(= % item))))
+
 (defn trolley-list-contents
   [trolley-state]
   [:div.trolley-contents
@@ -69,7 +83,7 @@
      [:ul
       (map-indexed
        (fn [idx item]
-         [:li {:key idx} (:name item) (:desc item)])
+         [trolley-item idx item (partial remove-item-from-trolley trolley-state item)])
        (:items @trolley-state))])])
 
 (defn select-items-view
