@@ -51,8 +51,11 @@
                         :role "alert"
                         :on-click #(swap! tool-state assoc :shown-intro? true)}
       [:span {:aria-hidden true} "⨉"]]
-     [:p [:strong "Welcome!"]
-      " Quod satis pecuniae sempiternum. Ut sciat oportet motum. Nunquam invenies eum. Hic de tabula. Ego vivere, ut debui, et nunc fiant. Istuc quod opus non est. Lorem ipsum occurrebat pragmaticam semper ut, si quis ita velim tibi bene recognoscere. Quorum duo te mihi videtur. Mauris a nunc occideritis me rectum. Videtur quod Ive facillimum, qui fecit vos. Potes me interficere, sine testibus et tunc manere in pauci weeks vel mensis vestigia Isai Pinkman et vos quoque illum occidere. Exercitium inutili option A. Videtur mihi quod autem est."]]))
+     [:p
+      "Don't you hate it when you reach your car with all your recently purchased IKEA goodies only to realise they don't fit!
+You then proceed to play IKEA-car-boot Tetris and often end up opening all the boxes in order to get the contents in.
+Well those days are over thanks to IFLOGS, the IKEA Fleet Logistics System!
+Simply select the items you wish to purchase and tell us the dimensions of your car boot and we'll let you know if it fits AND how to get it in (no more Tetris!)."]]))
 
 (defn tool-view
   []
