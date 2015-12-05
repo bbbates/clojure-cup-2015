@@ -36,7 +36,7 @@
 (defn product [region product-context id]
   (let [url (format "http://m.ikea.com/%s/en/catalog/products/%s/%s/measurements/" region product-context id)
         response (http-kit/get url)]
-    (pprint (-> @response :body hick/parse hick/as-hickory))))
+    (transform-packages (get-hick-packages (-> @response :body hick/parse hick/as-hickory))) ))
 
 ;; (count (get-hick-packages single))
 ;; (count (get-hick-packages multi))
