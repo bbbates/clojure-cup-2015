@@ -6,7 +6,7 @@
 
 (defonce tool-state (atom {:state :select-items
                            :trolley {:items []}
-                           :cars {}}))
+                           :fleet {:vehicles []}}))
 
 (defn progress!
   [tool-state]
@@ -21,7 +21,7 @@
   [select-items/select-items-view (reagent/cursor all-state [:trolley]) (partial progress! all-state)])
 
 (defmethod tool-stage-view :enter-car-dimensions [_ all-state]
-  [car/car-info-view (reagent/cursor all-state [:cars]) (partial progress! all-state)])
+  [car/car-info-view (reagent/cursor all-state [:fleet]) (partial progress! all-state)])
 
 (defn dismissable-introduction
   []
