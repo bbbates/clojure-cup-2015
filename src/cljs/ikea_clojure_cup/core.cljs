@@ -2,30 +2,30 @@
     (:require [reagent.core :as reagent :refer [atom]]
               [reagent.session :as session]
               [secretary.core :as secretary :include-macros true]
-              [accountant.core :as accountant]))
+              [accountant.core :as accountant]
+              [alandipert.storage-atom :refer [local-storage]]
+              [ikea-clojure-cup.regions :as regions]))
+
+(def region-state (local-storage (atom {:region nil}) :region))
 
 ;; -------------------------
 ;; Views
 
 (defn home-page []
-  [:div [:h2 "Welcome to ikea-clojure-cup"]
-   [:div [:a {:href "/about"} "go to about page"]]])
-
-(defn about-page []
-  [:div [:h2 "About ikea-clojure-cup"]
-   [:div [:a {:href "/"} "go to the home page"]]])
+  [:div
+   [regions/region-modal region-state]
+   [:div [:h2 "Welcome to ikea-clojure-cup"]
+    [:div [:a {:href "/about"} "go to about page"]]]])
 
 (defn current-page []
-  [:div [(session/get :current-page)]])
+  [:div
+   [(session/get :current-page)]])
 
 ;; -------------------------
 ;; Routes
 
 (secretary/defroute "/" []
   (session/put! :current-page #'home-page))
-
-(secretary/defroute "/about" []
-  (session/put! :current-page #'about-page))
 
 ;; -------------------------
 ;; Initialize app

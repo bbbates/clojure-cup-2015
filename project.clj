@@ -9,6 +9,7 @@
                  [org.clojars.atroche/reagent "0.6.0-SNAPSHOT" :exclusions [org.clojure/tools.reader]]
                  [reagent-forms "0.5.13"]
                  [reagent-utils "0.1.5"]
+                 [alandipert/storage-atom "1.2.4"]
                  [cljsjs/react-bootstrap "0.27.3-0"]
                  [ring "1.4.0"]
                  [ring/ring-defaults "0.1.5"]
@@ -83,7 +84,7 @@
                                   [com.cemerick/piggieback "0.2.1"]
 
                                   [devcards "0.2.0-8"
-                                   :exclusions [org.clojure/tools.reader]]
+                                   :exclusions [org.clojure/tools.reader cljsjs/react]]
                                   [pjstadig/humane-test-output "0.7.0"]
                                   ]
 
