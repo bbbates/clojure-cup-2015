@@ -9,7 +9,9 @@
                    [ikea-clojure-cup.client-macros :refer [debounce]]))
 
 (defmethod init-field :autocomplete
-  [[type {:keys [id data-source input-class list-class item-class highlight-class input-placeholder result-fn choice-fn clear-on-focus? addons]
+  [[type {:keys [id data-source input-class list-class item-class
+                 highlight-class input-placeholder result-fn choice-fn
+                 clear-on-focus? addons]
           :as attrs
           :or {result-fn identity
                choice-fn identity
@@ -23,7 +25,8 @@
                            (let [choice (nth @selections @selected-index)]
                              (save! id choice)
                              (choice-fn choice)
-                             (reset! typeahead-hidden? true)))]
+                             (reset! typeahead-hidden? true)
+                             (reset! selections [])))]
     (render-element attrs doc
                     [type
                      [:div.input-group

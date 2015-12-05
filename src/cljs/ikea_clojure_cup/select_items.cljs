@@ -8,6 +8,8 @@
             [ikea-clojure-cup.bootstrap :as bootstrap])
   (:require-macros [ikea-clojure-cup.client-macros :refer [debounce]]))
 
+(def number-search-results 6)
+
 (defn- fetch-search-results
   [term]
   (let [data-ch (async/chan)
@@ -16,7 +18,7 @@
          {:params {:region (:code region)
                    :lang (:lang region)
                    :query term}
-          :handler (fn [resp] (async/put! data-ch (take 15 resp)))})
+          :handler (fn [resp] (async/put! data-ch (take number-search-results resp)))})
     data-ch))
 
 (defn item-preview
@@ -60,23 +62,48 @@
               :choice-fn (partial select-item! search-state trolley-state)}]
        search-state])))
 
+(defn package-total-overlay
+  [packages]
+  [bootstrap/pop-over {:id "package-popover" :title (str (count packages) " packages")
+                       :placement :bottom}
+   "This product comes in " (count packages) " packages"])
+
+(defn package-total-view
+  [item-container packages]
+  (let [show-popover (atom false)]
+    (fn [_]
+      (let [package-count (count packages)]
+        (if (zero? package-count)
+          [bootstrap/label {:bs-style :warning}
+           [bootstrap/glyph {:glyph :warning}] "No packages found!"]
+
+          [:div
+           [bootstrap/label {:on-mouse-over #(reset! show-popover true)
+                             :on-mouse-leave #(reset! show-popover false)}
+            package-count " package" (when (< 1 package-count) "s")
+            [bootstrap/overlay {:show @show-popover
+                                :container (reagent/current-component)}
+             [package-total-overlay packages]]]])))))
+
 (defn trolley-item
   [idx {:keys [desc name image-src packages id]} remove-fn add-another-fn]
   [bootstrap/list-group-item {:key idx :list-item true}
    [:div
     [:div.contents
-     [:h4 name]
-     [:p desc]
-     [:div.item-actions
-      [bootstrap/button-toolbar
-       [bootstrap/button {:bs-size :xs
-                          :bs-style :success
-                          :on-click add-another-fn}
-        [bootstrap/glyph {:glyph :plus}] " Add another"]
-       [bootstrap/button {:bs-size :xs
-                          :bs-style :danger
-                          :on-click remove-fn}
-        [bootstrap/glyph {:glyph :remove}] " Remove"]]]]
+     [:div
+      [:h4 name]
+      [:p desc]
+      [:div.item-actions
+       [bootstrap/button-toolbar
+        [bootstrap/button {:bs-size :xs
+                           :bs-style :success
+                           :on-click add-another-fn}
+         [bootstrap/glyph {:glyph :plus}] " Add another"]
+        [bootstrap/button {:bs-size :xs
+                           :bs-style :danger
+                           :on-click remove-fn}
+         [bootstrap/glyph {:glyph :remove}] " Remove"]]]]
+     [:div [package-total-view (reagent/current-component) packages]]]
     [:div.preview
      [bootstrap/thumbnail {:src image-src :responsive true}]]]])
 
@@ -89,16 +116,17 @@
 (defn trolley-list-contents
   [trolley-state]
   [:div.trolley-contents
-   (if (empty? (:items @trolley-state))
-     [:em "Nothing in your trolley, yet!"]
-     [bootstrap/list-group {:component-class :ul}
+   [bootstrap/list-group {:component-class :ul}
+    (if (empty? (:items @trolley-state))
+      [bootstrap/list-group-item {:key 0 :list-item true}
+       [:em "Nothing in your trolley, yet!"]]
       (map-indexed
        (fn [idx item]
          ^{:key idx}
          [trolley-item idx item
           (partial remove-item-from-trolley trolley-state idx)
           #(swap! trolley-state update-in [:items] conj item)])
-       (:items @trolley-state))])])
+       (:items @trolley-state)))]])
 
 (defn select-items-view
   [trolley-state progress-fn]

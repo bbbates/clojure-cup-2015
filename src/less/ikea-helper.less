@@ -22,12 +22,17 @@ body {
   background-position: right bottom, bottom left;
 }
 
-#wrap {min-height: 100%;}
+#wrap {
+  min-height: 100%;
+}
 
-#main {overflow:auto;
-  padding-bottom: 3.5em;}  /* must be same height as the footer */
+#main {
+  overflow: auto;
+  padding-bottom: 3.5em;
+}  /* must be same height as the footer */
 
-#footer {position: relative;
+#footer {
+  position: relative;
   margin-top: -3.5em; /* negative value of footer height */
   height: 3.5em;
   clear:both;
@@ -35,7 +40,8 @@ body {
 
   text-align: left;
   vertical-align: -2em;
-  font-size: 0.7em;}
+  font-size: 0.7em;
+}
 
 /*Opera Fix*/
 body:before {/* thanks to Maleika (Kohoutec)*/
@@ -124,12 +130,21 @@ You also need to include this conditional style in the <head> of your HTML file 
               .make-row();
               .contents {
                 .make-xs-column(9);
-                h4 {
-                  margin-top: 0px;
+                > div:first-child {
+                  .make-xs-column(10);
+                  h4 {
+                    margin-top: 0px;
+                  }
                 }
+                > div:last-child {
+                  padding-top: 0.3em;
+                  .make-xs-column(2);
+                }
+
               }
               .preview {
                 .make-xs-column(3);
+                text-align: center;
                 .thumbnail {
                   margin-bottom: 0px;
                   img {
@@ -140,14 +155,18 @@ You also need to include this conditional style in the <head> of your HTML file 
             }
           }
         }
+
+        #package-popover {
+          min-width: 200px;
+
+        }
+
       }
 
       #search-results {
-        left: 1em;
-        top: 1em;
+        position: static;
         max-width: 100%;
         width: 100%;
-        overflow: scroll;
         ul {
           list-style: none;
           .make-row();
@@ -177,9 +196,7 @@ You also need to include this conditional style in the <head> of your HTML file 
               }
             }
           }
-
         }
-
       }
     }
 
