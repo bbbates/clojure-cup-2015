@@ -12,7 +12,6 @@
   [term]
   (let [data-ch (async/chan)
         region (:region @region-state)]
-    (println "1 >>>>>>" region)
     (GET "/ikea/search"
          {:params {:region (:code region)
                    :lang (:lang region)
@@ -35,7 +34,14 @@
 
 (defn select-item!
   [trolley-state item]
-  (swap! trolley-state assoc ::selected-item item))
+  (let [region (:region @region-state)]
+    (GET "/ikea/product"
+         {:params {:region (:code region)
+                   :lang (:lang region)
+                   :product-context (:product-context item)
+                   :product-id (:id item)}
+          :handler (fn [resp]
+                     (swap! trolley-state assoc ::selected-item (assoc item :packages resp)))})))
 
 (defn item-search
   [trolley-state]
