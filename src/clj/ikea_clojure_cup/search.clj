@@ -58,9 +58,9 @@
           []
           hick-products))
 
-(defn search [region query]
+(defn search [region lang query]
   (when-not (cs/blank? query)
-    (let [url (format "%s/%s/en/search/?query=%s" ikea-domain region query)
+    (let [url (format "%s/%s/%s/search/?query=%s" ikea-domain region lang query)
           response (http-kit/get url)
           site-htree (-> @response :body hick/parse hick/as-hickory)
           hick-products (get-hick-products site-htree)]
