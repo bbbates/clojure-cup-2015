@@ -23,9 +23,9 @@
    [:p common/welcome-note]
    [:p "There are 3 possible outcomes:"
     [:ul
-     [:li "1. It fits!  You'll fit ALL the packages for your products in your car!"]
+     [:li "1. It fits!  You'll fit ALL of the packages for your products in your car!"]
      [:li "2. It kinda fits!  You'll fit SOME of the packages in your car but may have to get creative or say goodbye to others."]
-     [:li "3. It does not!  You'll fit NONE of the packages for your products in your car."]]]
+     [:li "3. It does not fit!  You'll fit NONE of the packages for your products in your car."]]]
    [bootstrap/button {:bs-size :lg :href "/"} "Try it!"]])
 
 (defn current-page []
