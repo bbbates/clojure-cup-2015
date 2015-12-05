@@ -25,12 +25,12 @@ body {
 #wrap {min-height: 100%;}
 
 #main {overflow:auto;
-	padding-bottom: 3.5em;}  /* must be same height as the footer */
+  padding-bottom: 3.5em;}  /* must be same height as the footer */
 
 #footer {position: relative;
-	margin-top: -3.5em; /* negative value of footer height */
-	height: 3.5em;
-	clear:both;
+  margin-top: -3.5em; /* negative value of footer height */
+  height: 3.5em;
+  clear:both;
   padding-top: 1em;
 
   text-align: left;
@@ -39,11 +39,11 @@ body {
 
 /*Opera Fix*/
 body:before {/* thanks to Maleika (Kohoutec)*/
-content:"";
-height:100%;
-float:left;
-width:0;
-margin-top:-32767px;/* thank you Erik J - negate effect of float*/
+  content:"";
+  height:100%;
+  float:left;
+  width:0;
+  margin-top:-32767px;/* thank you Erik J - negate effect of float*/
 }
 
 #footer a {
@@ -56,9 +56,9 @@ margin-top:-32767px;/* thank you Erik J - negate effect of float*/
 You also need to include this conditional style in the <head> of your HTML file to feed this style to IE 6 and lower and 8 and higher.
 
 <!--[if !IE 7]>
-	<style type="text/css">
-		#wrap {display:table;height:100%}
-	</style>
+<style type="text/css">
+#wrap {display:table;height:100%}
+</style>
 <![endif]-->
 
 */
@@ -89,4 +89,46 @@ You also need to include this conditional style in the <head> of your HTML file 
 
 .serial-text {
   padding: 1em 0 0 0;
+}
+
+
+.select-items {
+  main {
+    .make-row();
+
+    .search {
+      .make-xs-column(12);
+      .make-sm-column(6);
+      .trolley-contents {
+        ul {
+          li {
+            > div {
+              .make-row();
+              .contents {
+                .make-xs-column(9);
+                h4 {
+                  margin-top: 0px;
+                }
+              }
+              .preview {
+                .make-xs-column(3);
+                .thumbnail {
+                  margin-bottom: 0px;
+                  img {
+                    .size(5em; 5em);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .preview {
+      .hidden-xs();
+      .make-sm-column(6);
+    }
+  }
+
 }

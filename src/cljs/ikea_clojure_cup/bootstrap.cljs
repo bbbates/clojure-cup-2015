@@ -27,3 +27,5 @@
 (def nav-bar-brand (reagent/adapt-react-class js/ReactBootstrap.NavBrand))
 
 (def panel (reagent/adapt-react-class js/ReactBootstrap.Panel))
+(def list-group (reagent/adapt-react-class js/ReactBootstrap.ListGroup))
+(def list-group-item (reagent/adapt-react-class js/ReactBootstrap.ListGroupItem))

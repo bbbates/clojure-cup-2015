@@ -63,17 +63,22 @@
 
 (defn trolley-item
   [idx {:keys [desc name image-src packages id]} remove-fn add-another-fn]
-  [:li {:key idx}
-   name desc
-   [:div.item-actions
-    [bootstrap/button {:bs-size :xs
-                       :bs-style :success
-                       :on-click add-another-fn}
-     [bootstrap/glyph {:glyph :plus}] " Add another"]
-    [bootstrap/button {:bs-size :xs
-                       :bs-style :danger
-                       :on-click remove-fn}
-     [bootstrap/glyph {:glyph :remove}] " Remove"]]])
+  [bootstrap/list-group-item {:key idx :list-item true}
+   [:div
+    [:div.contents
+     [:h4 name]
+     [:p desc]
+     [:div.item-actions
+      [bootstrap/button {:bs-size :xs
+                         :bs-style :success
+                         :on-click add-another-fn}
+       [bootstrap/glyph {:glyph :plus}] " Add another"]
+      [bootstrap/button {:bs-size :xs
+                         :bs-style :danger
+                         :on-click remove-fn}
+       [bootstrap/glyph {:glyph :remove}] " Remove"]]]
+    [:div.preview
+     [bootstrap/thumbnail {:src image-src :responsive true}]]]])
 
 (defn- remove-item-from-trolley
   [trolley-state idx]
@@ -86,9 +91,10 @@
   [:div.trolley-contents
    (if (empty? (:items @trolley-state))
      [:em "Nothing in your trolley, yet!"]
-     [:ul
+     [bootstrap/list-group {:component-class :ul}
       (map-indexed
        (fn [idx item]
+         ^{:key idx}
          [trolley-item idx item
           (partial remove-item-from-trolley trolley-state idx)
           #(swap! trolley-state update-in [:items] conj item)])
