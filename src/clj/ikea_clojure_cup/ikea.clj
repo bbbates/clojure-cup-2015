@@ -7,6 +7,7 @@
             [ikea-clojure-cup.pack :as pack]))
 
 
+
 (defroutes* ikea-routes
   (GET* "/regions" []
         (ok [{:name "Australia"
@@ -24,5 +25,7 @@
                        lang :- s/Str]
         (ok (product/product region lang product-context product-id)))
 
-  (GET* "/pack" []
-        (ok (pack/pack pack/sample-param))))
+  (POST* "/pack" []
+        :body [body :- {s/Keyword s/Any}]
+         (println body)
+         (ok (pack/pack pack/sample-param))))
