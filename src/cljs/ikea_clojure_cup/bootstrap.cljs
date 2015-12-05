@@ -23,5 +23,7 @@
 
 (def nav (reagent/adapt-react-class js/ReactBootstrap.Nav))
 (def nav-item (reagent/adapt-react-class js/ReactBootstrap.NavItem))
+(def nav-bar (reagent/adapt-react-class js/ReactBootstrap.Navbar))
+(def nav-bar-brand (reagent/adapt-react-class js/ReactBootstrap.NavBrand))
 
 (def panel (reagent/adapt-react-class js/ReactBootstrap.Panel))

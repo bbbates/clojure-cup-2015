@@ -1,14 +1,16 @@
 (ns ikea-clojure-cup.tool
   (:require [reagent.core :as reagent :refer [atom]]
+            [alandipert.storage-atom :refer [local-storage]]
             [ikea-clojure-cup.bootstrap :as bootstrap]
             [ikea-clojure-cup.select-items :as select-items]
             [ikea-clojure-cup.car :as car]
             [ikea-clojure-cup.calculate :as calc]
             [ikea-clojure-cup.pack-it :as pack-it]))
 
-(defonce tool-state (atom {:state :select-items
-                           :trolley {:items []}
-                           :fleet {:vehicles []}}))
+(defonce tool-state (local-storage (atom {:state :select-items
+                                          :trolley {:items []}
+                                          :fleet {:vehicles []}})
+                                   :tool))
 
 (defn progress!
   [tool-state]
@@ -37,7 +39,11 @@
   []
   (when-not (:shown-intro? @tool-state)
     [:div.intro
-     [bootstrap/button {:class "close" :data-dismiss "alert" :aria-label "close" :role "alert" :on-click #(swap! tool-state assoc :shown-intro? true)}
+     [bootstrap/button {:class "close"
+                        :data-dismiss "alert"
+                        :aria-label "close"
+                        :role "alert"
+                        :on-click #(swap! tool-state assoc :shown-intro? true)}
       [:span {:aria-hidden true} "⨉"]]
      [:p [:strong "Welcome!"]
       " Quod satis pecuniae sempiternum. Ut sciat oportet motum. Nunquam invenies eum. Hic de tabula. Ego vivere, ut debui, et nunc fiant. Istuc quod opus non est. Lorem ipsum occurrebat pragmaticam semper ut, si quis ita velim tibi bene recognoscere. Quorum duo te mihi videtur. Mauris a nunc occideritis me rectum. Videtur quod Ive facillimum, qui fecit vos. Potes me interficere, sine testibus et tunc manere in pauci weeks vel mensis vestigia Isai Pinkman et vos quoque illum occidere. Exercitium inutili option A. Videtur mihi quod autem est."]]))

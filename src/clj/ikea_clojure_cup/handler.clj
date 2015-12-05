@@ -14,7 +14,7 @@
 
 (def mount-target
   [:div#app
-      [:h3 "Please wait while loading..."]])
+   [:h3 "Please wait while loading..."]])
 
 (def loading-page
   (html

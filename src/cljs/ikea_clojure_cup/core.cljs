@@ -13,13 +13,18 @@
 (defn home-page []
   [:div
    [regions/region-modal]
-   [:span (get-in @regions/region-state [:region :name])]
    [tool/tool-view]])
 
 (defn current-page []
   [:div
   [:div.container
-   [bootstrap/nav [bootstrap/nav-item {:title "IKEA" :href "http://www.ikea.com/au/en/"} "IKEA"]]
+   [bootstrap/nav-bar
+    [bootstrap/nav-bar-brand
+     [:a {:title "IKEA" :href "/"} "IKEA"]]
+    [bootstrap/nav {:pull-right true}
+       [bootstrap/nav-item {:title "Change region"
+                            :on-click #(swap! regions/region-state dissoc :region)}
+        (get-in @regions/region-state [:region :name])]]]
    [(session/get :current-page)]]
   [:footer.footer [:sup "©"]  [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd"]]])
 
