@@ -20,11 +20,13 @@
                  [secretary "1.2.3"]
                  [venantius/accountant "0.1.5"
                   :exclusions [org.clojure/tools.reader]]
-                 
+
+
                  ]
 
   :plugins [[lein-environ "1.0.1"]
             [lein-cljsbuild "1.1.1"]
+            [icm-consulting/lein-less "1.7.6-SNAPSHOT"]
             [lein-asset-minifier "0.2.2"
              :exclusions [org.clojure/clojure]]]
 
@@ -39,10 +41,15 @@
 
   :clean-targets ^{:protect false} [:target-path
                                     [:cljsbuild :builds :app :compiler :output-dir]
-                                    [:cljsbuild :builds :app :compiler :output-to]]
+                                    [:cljsbuild :builds :app :compiler :output-to]
+                                    [:less :clean-path]]
 
   :source-paths ["src/clj" "src/cljc"]
   :resource-paths ["resources" "target/cljsbuild"]
+
+  :less {:source-paths ["src/less/ikea-helper.less"]
+         :target-path "resources/public/css"
+         :clean-path "resources/public/css/ikea-helper.css"}
 
   :minify-assets
   {:assets
@@ -73,9 +80,9 @@
                                    :exclusions [org.clojure/clojure org.clojure/tools.reader]]
                                   [org.clojure/tools.nrepl "0.2.12"]
                                   [com.cemerick/piggieback "0.2.1"]
-                                   
+
                                   [devcards "0.2.0-8"
-                                   :exclusions [org.clojure/tools.reader]] 
+                                   :exclusions [org.clojure/tools.reader]]
                                   [pjstadig/humane-test-output "0.7.0"]
                                   ]
 
