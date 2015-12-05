@@ -15,7 +15,7 @@
         :query-params [query :- s/Str
                        region :- s/Str
                        lang :- s/Str]
-        (ok (search/search region query)))
+        (ok (search/search region lang query)))
   (GET* "/product" []
         :query-params [product-context :- s/Str
                        product-id :- s/Str
