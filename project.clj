@@ -135,6 +135,7 @@
                        :env {:production true}
                        :aot :all
                        :omit-source true
+                       :auto-clean false
                        :cljsbuild {:jar true
                                    :builds {:app
                                             {:source-paths ["env/prod/cljs"]
