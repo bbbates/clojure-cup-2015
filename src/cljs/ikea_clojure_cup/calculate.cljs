@@ -7,7 +7,7 @@
 (defn- fetch-search-results
   [progress-fn all-state]
   (POST "/ikea/pack"
-        {:body @all-state
+        {:params @all-state
          :handler (fn [resp]
                     (swap! all-state assoc :results resp)
                     (progress-fn))}))

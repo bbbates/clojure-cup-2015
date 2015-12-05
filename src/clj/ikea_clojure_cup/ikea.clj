@@ -26,6 +26,5 @@
         (ok (product/product region lang product-context product-id)))
 
   (POST* "/pack" []
-        :body [body :- {s/Keyword s/Any}]
-         (println body)
+         :body [pack-query {s/Keyword s/Any}]
          (ok (pack/pack pack/sample-param))))
