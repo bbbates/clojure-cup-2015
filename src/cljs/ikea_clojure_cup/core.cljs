@@ -13,13 +13,26 @@
 (defn home-page []
   [:div
    [regions/region-modal]
-   [:span (get-in @regions/region-state [:region :name])]
    [tool/tool-view]])
 
 (defn current-page []
+<<<<<<< HEAD
   [:div#wrap.container
   [:div#main
    [bootstrap/nav [bootstrap/nav-item {:title "IKEA" :href "http://www.ikea.com/au/en/"} "IKEA"]]
+=======
+  [:div
+  [:div.container
+   [bootstrap/nav-bar
+    [bootstrap/nav-bar-brand
+     [:a {:title "IKEA" :href "/"} "IKEA"]]
+    [bootstrap/nav {:pull-right true}
+     [bootstrap/nav-item {:title "Change region"
+                          :on-click #(swap! regions/region-state dissoc :region)}
+      (get-in @regions/region-state [:region :name])]
+     [bootstrap/button {:title "Start over" :bs-style :danger
+                        :on-click tool/start-over} "Start over"]]]
+>>>>>>> bfc5b57f37cc44c0aa11ef2c2249045920e435ac
    [(session/get :current-page)]]
   [:div#footer
    [:sup "© "]

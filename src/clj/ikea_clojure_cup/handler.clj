@@ -14,12 +14,13 @@
 
 (def mount-target
   [:div#app
-      [:h3 "Please wait while loading..."]])
+   [:h3 "Please wait while loading..."]])
 
 (def loading-page
   (html
    [:html
     [:head
+     [:title "Untitled IKEA Logistical Intelligence Simulator 3000"]
      [:meta {:charset "utf-8"}]
      [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
      (include-css (if (env :dev) "css/ikea-helper.css" "css/ikea-helper.min.css"))]
@@ -49,6 +50,6 @@
    {:format {:formats [:transit-json]}}
    (middlewares [(wrap-gzip)
                  (wrap-exceptions)
-                 (wrap-defaults site-defaults)
+                 (wrap-defaults (assoc-in site-defaults [:security :anti-forgery] false))
                  (wrap-reload)]
                 ikea-routes)))
