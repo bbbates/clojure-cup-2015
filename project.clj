@@ -12,14 +12,15 @@
                  [reagent-utils "0.1.5"]
                  [ring "1.4.0"]
                  [ring/ring-defaults "0.1.5"]
+                 [bk/ring-gzip "0.1.1"]
                  [prone "0.8.2"]
-                 [compojure "1.4.0"]
+                 [metosin/compojure-api "0.24.1"]
                  [hiccup "1.0.5"]
                  [environ "1.0.1"]
                  [org.clojure/clojurescript "1.7.170" :scope "provided"]
                  [secretary "1.2.3"]
-                 [venantius/accountant "0.1.5"
-                  :exclusions [org.clojure/tools.reader]]
+                 [venantius/accountant "0.1.5" :exclusions [org.clojure/tools.reader]]
+                 [cljs-ajax "0.5.1"]
                  [hickory "0.5.4"]
 
                  ]
