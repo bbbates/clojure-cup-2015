@@ -4,7 +4,8 @@
               [secretary.core :as secretary :include-macros true]
               [accountant.core :as accountant]
               [ikea-clojure-cup.regions :as regions]
-              [ikea-clojure-cup.tool :as tool]))
+              [ikea-clojure-cup.tool :as tool]
+              [ikea-clojure-cup.bootstrap :as bootstrap]))
 
 ;; -------------------------
 ;; Views
@@ -17,7 +18,10 @@
 
 (defn current-page []
   [:div
-   [(session/get :current-page)]])
+  [:div.container
+   [bootstrap/nav [bootstrap/nav-item {:title "IKEA" :href "http://www.ikea.com/au/en/"} "IKEA"]]
+   [(session/get :current-page)]]
+  [:footer.footer [:sup "©"]  [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd"]]])
 
 ;; -------------------------
 ;; Routes

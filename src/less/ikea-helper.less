@@ -3,6 +3,11 @@
 @import 'vendors/bootstrap/bootstrap.less';
 @import 'variables.less';
 
+body {
+    background-image: url("../img/background.jpg");
+    background-repeat: repeat;
+    margin-bottom: 5em;
+}
 .loading {
   padding-left: 3em;
   background-image: url("@{loading-img}");
@@ -16,5 +21,15 @@
 
 .intro:extend(.alert, .alert-info, .alert-dismissable) {
 
+}
+
+.footer {
+  padding-top: 2em;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 5em;
 }
 
