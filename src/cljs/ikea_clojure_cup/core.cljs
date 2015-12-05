@@ -24,27 +24,27 @@
    [bootstrap/button {:bs-size :lg :href "/"} "Try it!"]])
 
 (defn current-page []
-  [:div#wrap
-   [bootstrap/nav-bar
-    [bootstrap/nav-bar-brand
-     [:a {:title "IKEA" :href "/"} "IKEA"]]
-    [bootstrap/nav {:pull-right true}
-     [bootstrap/nav-item {:title "Change region"
-                          :on-click #(swap! regions/region-state dissoc :region)}
-      (str "Region: " (get-in @regions/region-state [:region :name]))]
-
-     [bootstrap/nav-item {:title "About" :href "/about"} "About"]
-     [bootstrap/nav-item {:title "Start over" :bs-style :danger
-                          :href "/"
-                          :on-click tool/start-over} "Start over"]]]
-   [:div.container
-    [:div#main
-     [(session/get :current-page)]]
-    [:div#footer
-     [:sup "© "]
-     [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd B.V 2010"]
-     [:div.serial-text.pull-right "AA-498638-1"]
-     [:div.serial-number.pull-right (first (shuffle (range 10000 20000)))]]]])
+  [:div
+   [:div#wrap
+    [bootstrap/nav-bar
+     [bootstrap/nav-bar-brand
+      [:a {:title "IKEA" :href "/"} "IKEA"]]
+     [bootstrap/nav {:pull-right true}
+      [bootstrap/nav-item {:title "Change region"
+                           :on-click #(swap! regions/region-state dissoc :region)}
+       (get-in @regions/region-state [:region :name])]
+      [bootstrap/nav-item {:title "About" :href "/about"} "About"]
+      [bootstrap/nav-item {:title "Start over" :bs-style :danger
+                           :href "/"
+                           :on-click tool/start-over} "Start over"]]]
+    [:div.container
+     [:div#main
+      [(session/get :current-page)]]]]
+   [:div#footer.container
+    [:sup "© "]
+    [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd B.V 2010"]
+    [:div.serial-text.pull-right "AA-498638-1"]
+    [:div.serial-number.pull-right (first (shuffle (range 10000 20000)))]]])
 
 
 ;; -------------------------
