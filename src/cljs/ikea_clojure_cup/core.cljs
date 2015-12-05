@@ -21,7 +21,7 @@
   [:div.container
    [bootstrap/nav [bootstrap/nav-item {:title "IKEA" :href "http://www.ikea.com/au/en/"} "IKEA"]]
    [(session/get :current-page)]]
-  [:footer.footer "Copyright ICM Consulting Pty Ltd"]])
+  [:footer.footer [:sup "©"]  [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd"]]])
 
 ;; -------------------------
 ;; Routes
