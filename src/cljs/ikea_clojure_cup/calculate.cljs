@@ -16,8 +16,7 @@
   [all-state progress-fn]
   [:section.enter-car-info
    [:heading
-    [:h2 "Calculating..."]
-    [:p (str @all-state)]]])
+    [:h2 "Calculating..."]]])
 
 (defn- calculate-view
   [all-state progress-fn]

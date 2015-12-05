@@ -11,6 +11,7 @@
 (def input (reagent/adapt-react-class js/ReactBootstrap.Input))
 
 (def button (reagent/adapt-react-class js/ReactBootstrap.Button))
+(def button-toolbar (reagent/adapt-react-class js/ReactBootstrap.ButtonToolbar))
 
 (def image (reagent/adapt-react-class js/ReactBootstrap.Image))
 (def thumbnail (reagent/adapt-react-class js/ReactBootstrap.Thumbnail))

@@ -69,14 +69,15 @@
      [:h4 name]
      [:p desc]
      [:div.item-actions
-      [bootstrap/button {:bs-size :xs
-                         :bs-style :success
-                         :on-click add-another-fn}
-       [bootstrap/glyph {:glyph :plus}] " Add another"]
-      [bootstrap/button {:bs-size :xs
-                         :bs-style :danger
-                         :on-click remove-fn}
-       [bootstrap/glyph {:glyph :remove}] " Remove"]]]
+      [bootstrap/button-toolbar
+       [bootstrap/button {:bs-size :xs
+                          :bs-style :success
+                          :on-click add-another-fn}
+        [bootstrap/glyph {:glyph :plus}] " Add another"]
+       [bootstrap/button {:bs-size :xs
+                          :bs-style :danger
+                          :on-click remove-fn}
+        [bootstrap/glyph {:glyph :remove}] " Remove"]]]]
     [:div.preview
      [bootstrap/thumbnail {:src image-src :responsive true}]]]])
 
@@ -111,10 +112,11 @@
      [trolley-list-contents trolley-state]]
     [:div.preview]]
    [:footer
+    [bootstrap/button-toolbar
     [bootstrap/button {:bs-size :lg
                        :bs-style :danger
                        :on-click #(swap! trolley-state assoc :items [])} "Clear trolley"]
     [bootstrap/button {:bs-size :lg
                        :bs-style :primary
                        :disabled (empty? (:items @trolley-state))
-                       :on-click progress-fn} "Continue"]]])
+                       :on-click progress-fn} "Continue"]]]])

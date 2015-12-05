@@ -11,11 +11,11 @@
                 {:id "22" :depth 2 :weight 2 :height 2}]})
 ;;   )
 
-(defn bin->string [{:keys [id depth weight height]}]
-  (format "%s:0:%sx%sx%s" id depth weight height))
+(defn bin->string [{:keys [id depth width height]}]
+  (format "%s:0:%sx%sx%s" id depth width height))
 
-(defn package->string [{:keys [id depth weight height]}]
-  (format "%s:0:0:%sx%sx%s" id depth weight height))
+(defn package->string [{:keys [id length width height]}]
+  (format "%s:0:0:%sx%sx%s" id length width height))
 
 (defn get-missing [requested-packages packing-details]
   (let [all (map :id requested-packages)

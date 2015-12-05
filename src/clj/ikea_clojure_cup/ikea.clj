@@ -27,4 +27,10 @@
 
   (POST* "/pack" []
          :body [pack-query {s/Keyword s/Any}]
-         (ok (pack/pack pack/sample-param))))
+         (let [transformed-params {:bins [(merge {:id "car"}
+                                                 (-> pack-query :fleet :vehicles first))]
+                                   :packages (flatten (reduce (fn [v {:keys [packages name]}]
+                                                                (conj v (map #(assoc % :id name) packages)))
+                                                              []
+                                                              (-> pack-query :trolley :items))) }]
+           (ok (pack/pack transformed-params)))))
