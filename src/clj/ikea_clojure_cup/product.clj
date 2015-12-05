@@ -24,12 +24,6 @@
             []
             table-rows)))
 
-(defn- filter-string-contains [v string]
-  (filter #(.contains % string) v))
-
-(defn- dimension->int [coll]
-  (Integer/parseInt (nth (cs/split (first coll) #"\s") 2)))
-
 (defn- transform-packages [hick-packages]
   (reduce (fn [v {:keys [dimensions-and-weight packages weight-unit dimension-unit]}]
             (conj v {:width (nth dimensions-and-weight 0)
