@@ -2,7 +2,10 @@
   (:require [reagent.core :as reagent :refer [atom]]
             [ajax.core :refer [GET]]
             [reagent-forms.core :refer [bind-fields]]
+            [alandipert.storage-atom :refer [local-storage]]
             [ikea-clojure-cup.bootstrap :as bootstrap]))
+
+(defonce region-state (local-storage (atom {:region nil}) :region))
 
 (defn- fetch-regions
   [region-state]
@@ -38,7 +41,7 @@
    [:p "Before you begin, select your closest IKEA region."]])
 
 (defn region-modal
-  [region-state]
+  []
   (when-not (:region @region-state)
      [bootstrap/modal {:auto-focus true
                        :on-hide (fn [& _] (println "Hiding!"))

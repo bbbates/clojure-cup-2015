@@ -3,19 +3,17 @@
               [reagent.session :as session]
               [secretary.core :as secretary :include-macros true]
               [accountant.core :as accountant]
-              [alandipert.storage-atom :refer [local-storage]]
               [ikea-clojure-cup.regions :as regions]
               [ikea-clojure-cup.tool :as tool]))
-
-(def region-state (local-storage (atom {:region nil}) :region))
 
 ;; -------------------------
 ;; Views
 
 (defn home-page []
   [:div
-   [regions/region-modal region-state]
-   [tool/tool-view (:region @region-state)]])
+   [regions/region-modal]
+   [:span (get-in @regions/region-state [:region :name])]
+   [tool/tool-view]])
 
 (defn current-page []
   [:div
