@@ -17,11 +17,15 @@
    [tool/tool-view]])
 
 (defn current-page []
-  [:div
-  [:div.container
+  [:div#wrap.container
+  [:div#main
    [bootstrap/nav [bootstrap/nav-item {:title "IKEA" :href "http://www.ikea.com/au/en/"} "IKEA"]]
    [(session/get :current-page)]]
-  [:footer.footer [:sup "©"]  [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd"]]])
+  [:div#footer
+   [:sup "© "]
+   [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd B.V 2010"]
+   [:div.serial-text.pull-right "AA-498638-1"]
+   [:div.serial-number.pull-right (first (shuffle (range 10000 20000)))]]])
 
 ;; -------------------------
 ;; Routes
