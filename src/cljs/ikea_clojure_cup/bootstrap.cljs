@@ -33,3 +33,6 @@
 
 (def pop-over (reagent/adapt-react-class js/ReactBootstrap.Popover))
 (def overlay (reagent/adapt-react-class js/ReactBootstrap.Overlay))
+(def overlay-trigger (reagent/adapt-react-class js/ReactBootstrap.OverlayTrigger))
+
+(def label (reagent/adapt-react-class js/ReactBootstrap.Label))
