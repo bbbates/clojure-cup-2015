@@ -65,8 +65,7 @@
                                                  27 (do (reset! typeahead-hidden? true)
                                                       (reset! selected-index 0))
                                                  "default"))}]
-                      (when addons
-                        [addons])]
+                      (when addons [addons])]
 
                      [:ul {:style {:display (if (or (empty? @selections) @typeahead-hidden?) :none :block) }
                            :class list-class
