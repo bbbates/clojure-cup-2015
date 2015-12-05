@@ -23,7 +23,8 @@
                            (let [choice (nth @selections @selected-index)]
                              (save! id choice)
                              (choice-fn choice)
-                             (reset! typeahead-hidden? true)))]
+                             (reset! typeahead-hidden? true)
+                             (reset! selections [])))]
     (render-element attrs doc
                     [type
                      [:div.input-group
