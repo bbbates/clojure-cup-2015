@@ -27,6 +27,7 @@
   :plugins [[lein-environ "1.0.1"]
             [lein-cljsbuild "1.1.1"]
             [icm-consulting/lein-less "1.7.6-SNAPSHOT"]
+            [lein-ring "0.9.7"]
             [lein-asset-minifier "0.2.2"
              :exclusions [org.clojure/clojure]]]
 
