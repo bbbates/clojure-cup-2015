@@ -33,8 +33,8 @@
           []
           hick-packages))
 
-(defn product [region product-context id]
-  (let [url (format "http://m.ikea.com/%s/en/catalog/products/%s/%s/measurements/" region product-context id)
+(defn product [region lang product-context id]
+  (let [url (format "http://m.ikea.com/%s/%s/catalog/products/%s/%s/measurements/" region lang product-context id)
         response (http-kit/get url)]
     (transform-packages (get-hick-packages (-> @response :body hick/parse hick/as-hickory))) ))
 

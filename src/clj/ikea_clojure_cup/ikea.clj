@@ -12,9 +12,13 @@
               :code "au"
               :lang "en"}]))
   (GET* "/search" []
-        :query-params [query :- s/Str]
-        (ok (search/search "au" query)))
+        :query-params [query :- s/Str
+                       region :- s/Str
+                       lang :- s/Str]
+        (ok (search/search region query)))
   (GET* "/product" []
         :query-params [product-context :- s/Str
-                       product-id :- s/Str]
-        (ok (product/product "au" product-context product-id))))
+                       product-id :- s/Str
+                       region :- s/Str
+                       lang :- s/Str]
+        (ok (product/product region lang product-context product-id))))
