@@ -6,9 +6,9 @@
 
 ;; (comment
   (def sample-param
-    {:bins [{:id "car" :depth 5 :weight 5 :height 5}]
-     :packages [{:id "blah" :depth 10 :weight 10 :height 10}
-                {:id "22" :depth 2 :weight 2 :height 2}]})
+    {:bins [{:id "car" :depth 5 :width 5 :height 5}]
+     :packages [{:id "blah" :length 10 :width 10 :height 10}
+                {:id "22" :length 2 :width 2 :height 2}]})
 ;;   )
 
 (defn bin->string [{:keys [id depth width height]}]
@@ -18,13 +18,21 @@
   (format "%s:0:0:%sx%sx%s" id length width height))
 
 (defn get-missing [requested-packages packing-details]
-  (let [all (map :id requested-packages)
+  (let [all (set (map #(-> % :id str) requested-packages))
         packed (set (map :id (-> packing-details first :items)))
-        missing (set (remove packed all))]
-  (filter #(missing (:id %)) requested-packages)))
+        missing (clojure.set/difference all packed)
+        id-package-map (reduce (fn [m {:keys [id] :as p}]
+                                 (assoc m (str id) p))
+                               {}
+                               requested-packages)]
+    (vals (filter (fn [[k v]] (missing k)) id-package-map))))
 
-(defn pack [{:keys [bins packages]}]
+(defn pack [{:keys [bins products]}]
   (let [bins (cs/join "," (map bin->string bins))
+        packages (flatten (reduce (fn [v {:keys [packages id name]}]
+                                    (conj v (map #(assoc % :id (count v) :name name) packages)))
+                                  []
+                                  products))
         items (cs/join "," (map package->string packages))
         url (format "http://www.packit4me.com/api/call/raw?bins=%s&items=%s" bins items)
         response (http-kit/post url)
@@ -41,13 +49,15 @@
              {:missing (get-missing packages packing-details)}))))
 
 
+;; (pack {:bins [{:id "car" :depth 2 :width 2 :height 2}]
+;;      :packages [{:id "1111" :width 2 :length 2 :height 2}
+;;                 {:id "2222" :width 2 :length 2 :height 2}]})
+
 (comment
   (pack sample-param)
   (def res-partial [{:curr_weight 0, :weight_limit 0, :item_count 1, :size_2 5, :size "5 x 5 x 5", :size_1 5, :id "0", :size_3 5, :items [{:constraints 0, :y_origin_in_bin -1.5, :x_origin_in_bin -1.5, :sp_size_3 2, :size_2 2, :sp_size_2 2, :sp_size "2 x 2 x 2", :weight 0, :size_1 2, :orig_size "2 x 2 x 2", :id "22", :size_3 2, :z_origin_in_bin 1.5, :sp_size_1 2}]}])
 
   (def res-yes [{:curr_weight 0, :weight_limit 0, :item_count 1, :size_2 5, :size "5 x 5 x 5", :size_1 5, :id "0", :size_3 5, :items [{:constraints 0, :y_origin_in_bin -1.5, :x_origin_in_bin -1.5, :sp_size_3 2, :size_2 2, :sp_size_2 2, :sp_size "2 x 2 x 2", :weight 0, :size_1 2, :orig_size "2 x 2 x 2", :id "22", :size_3 2, :z_origin_in_bin 1.5, :sp_size_1 2}]}])
-
-
 
   (def resp-preview (let [response (http-kit/post "http://www.packit4me.com/api/call/preview?bins=0:50:5x5x5&items=0:0:15:1x1x1&binId=0")]
     @response))

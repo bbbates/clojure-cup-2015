@@ -15,10 +15,12 @@
 (defn pack-it-view
   [result-state progress-fn]
   (fn [_ _]
-    [:section
+    [:section.center
      (case (:result @result-state)
-       :yes (heading "It'll fit!")
-       :no (heading "It won't fit :(")
+       :yes [:div
+            [:img {:src "img/itFits.png"}]]
+       :no [:div
+            [:img {:src "img/itDoesNotFit.png"}]]
        :partial [:div
-                 (heading "...kinda fits")
-                 [:p "It'll should fit better if you remove: " (cs/join "," (map #(-> % :id str) (:missing @result-state)))]])]))
+                 [:img {:src "img/itFitsMayBe.png"}]
+                 [:p "It'll should fit better if you remove: " (cs/join "," (map #(-> % :name str) (:missing @result-state)))]])]))

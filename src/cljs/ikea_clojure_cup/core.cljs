@@ -35,6 +35,7 @@
      [:div.serial-text.pull-right "AA-498638-1"]
      [:div.serial-number.pull-right (first (shuffle (range 10000 20000)))]]]])
 
+
 ;; -------------------------
 ;; Routes
 
