@@ -7,6 +7,33 @@
 
 (def ikea-domain "http://www.ikea.com")
 
+(defn- get-product-id [m]
+  (-> m :attrs :href (cs/split #"/") last))
+
+(defn- get-img-src [content]
+  (str ikea-domain
+       (-> (filter (fn [{:keys [type tag]}] (and (= :element type) (= :img tag))) content)
+           first
+           :attrs
+           :src)))
+
+(defn- get-product-name [content]
+  (-> (filter (fn [{:keys [type tag attrs]}] (and (= :element type)
+                                                  (= :span tag)
+                                                  (= "prodName prodNameTro" (:class attrs)))) content)
+      first
+      :content
+      first))
+
+(defn- get-product-desc [content]
+  (let [product-desc-divs (mapcat :content (filter (fn [{:keys [type tag attrs]}] (and (= :element type)
+                                                                                       (= :div tag)))
+                                                   content))
+        product-desc (filter (fn [{:keys [type attrs]}] (= type :element) (= "prodDesc" (:class attrs))) product-desc-divs)
+        product-desc (-> product-desc first :content first)]
+    (when product-desc
+      (cs/trim product-desc))))
+
 (defn search [region query]
   (when-not (cs/blank? query)
     (let [url (format "%s/%s/en/search/?query=%s" ikea-domain region query)
@@ -17,27 +44,11 @@
                                            (s/class "productPadding")
                                            (s/tag :a)) site-htree)]
       (reduce (fn [v m]
-                (let [product-id (-> m :attrs :href (cs/split #"/") last)
-                      content (:content m)
-                      image-src (-> (filter (fn [{:keys [type tag]}] (and (= :element type) (= :img tag))) content)
-                                    first
-                                    :attrs
-                                    :src)
-                      product-name (-> (filter (fn [{:keys [type tag attrs]}] (and (= :element type)
-                                                                                   (= :span tag)
-                                                                                   (= "prodName prodNameTro" (:class attrs)))) content)
-                                       first
-                                       :content
-                                       first
-                                       )
-                      product-desc-divs (mapcat :content (filter (fn [{:keys [type tag attrs]}] (and (= :element type)
-                                                                                                     (= :div tag)))
-                                                                 content))
-                      product-desc (filter (fn [{:keys [type attrs]}] (= type :element) (= "prodDesc" (:class attrs))) product-desc-divs)]
-                  (conj v {:id product-id
-                           :image-src (str ikea-domain image-src)
-                           :name product-name
-                           :desc (-> product-desc first :content first)})))
+                (let [content (:content m)]
+                  (conj v {:id (get-product-id m)
+                           :image-src (get-img-src content)
+                           :name (get-product-name content)
+                           :desc (get-product-desc content)})))
               []
               hick-products))))
 
