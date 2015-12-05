@@ -8,7 +8,8 @@
 (defroutes* ikea-routes
   (GET* "/regions" []
         (ok [{:name "Australia"
-              :code "au"}]))
+              :code "au"
+              :lang "en"}]))
   (GET* "/search" []
         :query-params [query :- s/Str]
         (ok (search/search "au" query))))
