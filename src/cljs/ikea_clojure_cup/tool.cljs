@@ -1,15 +1,27 @@
 (ns ikea-clojure-cup.tool
   (:require [reagent.core :as reagent :refer [atom]]
             [ikea-clojure-cup.bootstrap :as bootstrap]
-            [ikea-clojure-cup.select-items :as select-items]))
+            [ikea-clojure-cup.select-items :as select-items]
+            [ikea-clojure-cup.car :as car]))
 
 (defonce tool-state (atom {:state :select-items
-                           :trolley {:items []}}))
+                           :trolley {:items []}
+                           :cars {}}))
+
+(defn progress!
+  [tool-state]
+  (let [current-state (:state @tool-state)
+        next-state (case current-state
+                     :select-items :enter-car-dimensions)]
+    (swap! tool-state assoc :state next-state)))
 
 (defmulti tool-stage-view (fn [state _ ] state))
 
 (defmethod tool-stage-view :select-items [_ all-state]
-  [select-items/select-items-view (reagent/cursor all-state [:trolley])])
+  [select-items/select-items-view (reagent/cursor all-state [:trolley]) (partial progress! all-state)])
+
+(defmethod tool-stage-view :enter-car-dimensions [_ all-state]
+  [car/car-info-view (reagent/cursor all-state [:cars]) (partial progress! all-state)])
 
 (defn dismissable-introduction
   []

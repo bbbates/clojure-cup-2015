@@ -67,7 +67,7 @@
        (:items @trolley-state))])])
 
 (defn select-items-view
-  [trolley-state]
+  [trolley-state progress-fn]
   [:section.select-items
    [:heading
     [:h2 "Step 1" [:small "Enter your IKEA shopping list"]]]
@@ -82,4 +82,5 @@
                        :on-click #(swap! trolley-state assoc :items [])} "Clear trolley"]
     [bootstrap/button {:bs-size :lg
                        :bs-style :primary
-                       :disabled (empty? (:items @trolley-state))} "Continue"]]])
+                       :disabled (empty? (:items @trolley-state))
+                       :on-click progress-fn} "Continue"]]])

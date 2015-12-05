@@ -24,7 +24,8 @@
                  [cljs-ajax "0.5.1"]
                  [org.clojure/core.async "0.2.374"]
                  [hickory "0.5.4"]
-                 [http-kit "2.1.18"]]
+                 [http-kit "2.1.18"]
+                 [org.clojure/data.json "0.2.6"]]
 
   :plugins [[lein-environ "1.0.1"]
             [lein-cljsbuild "1.1.1"]
