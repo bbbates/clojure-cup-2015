@@ -11,8 +11,16 @@
                            (s/select (s/class "ikea-measurements-table-row-child") site-htree))
         filter-fn #(remove cs/blank? (map cs/trim (filter string? (:content %))))]
     (reduce (fn [v m]
-              (conj v (concat (filter-fn m)
-                              (filter-fn (first (s/select (s/class "measure-quantity") m))))))
+              (let [d (filter-fn m)
+                    units (map #(cs/split % #" ") d)]
+                (conj v {:dimensions-and-weight (map #(-> (re-find #"\d+" %) Integer/parseInt) d)
+                         :packages (-> (filter-fn (first (s/select (s/class "measure-quantity") m)))
+                                       first
+                                       (cs/split #" ")
+                                       first
+                                       Integer/parseInt)
+                         :dimension-unit (-> units first last)
+                         :weight-unit (-> units last last)})))
             []
             table-rows)))
 
@@ -23,13 +31,14 @@
   (Integer/parseInt (nth (cs/split (first coll) #"\s") 2)))
 
 (defn- transform-packages [hick-packages]
-  (reduce (fn [v m]
-            (conj v {:width (dimension->int (filter-string-contains m "Width"))
-                     :height (dimension->int (filter-string-contains m "Height"))
-                     :length (dimension->int (filter-string-contains m "Length"))
-                     :weight (let [w (cs/split (first (filter-string-contains m "Weight")) #"\s")]
-                               (str (nth w 2) (nth w 3)))
-                     :quantity (Integer/parseInt (first (cs/split (first (filter-string-contains m "packages")) #" ")))}))
+  (reduce (fn [v {:keys [dimensions-and-weight packages weight-unit dimension-unit]}]
+            (conj v {:width (nth dimensions-and-weight 0)
+                     :height (nth dimensions-and-weight 1)
+                     :length (nth dimensions-and-weight 2)
+                     :weight (nth dimensions-and-weight 3)
+                     :quantity packages
+                     :weight-unit weight-unit
+                     :dimension-unit dimension-unit}))
           []
           hick-packages))
 
@@ -42,13 +51,13 @@
 ;; (count (get-hick-packages multi))
 ;; (transform-packages (get-hick-packages multi))
 
-
-
 (comment
   ;;multi
-  (product "au" "art" "20227125")
+  (product "au" "en" "art" "20227125")
   ;;single
-  (product "au" "art" "90263855")
+  (product "au" "en" "art" "90263855")
+  ;spr
+;;   (product "au" "en" "spr" "39111083")
   )
 
 (comment
@@ -1716,3 +1725,5 @@
         "\r\n"
         "\r\n"]}]}]}
   ))
+
+(def spr-sample )
