@@ -23,4 +23,6 @@
             [:img {:src "img/itDoesNotFit.png"}]]
        :partial [:div
                  [:img {:src "img/itFitsMayBe.png"}]
-                 [:p "It'll should fit better if you remove: " (cs/join "," (map #(-> % :name str) (:missing @result-state)))]])]))
+                 [:p "It'll should fit better if you remove:"
+                  [:ul
+                   (map #(vector :li (-> % :name str)) (:missing @result-state))]]])]))

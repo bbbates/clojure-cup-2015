@@ -5,6 +5,7 @@
             [accountant.core :as accountant]
             [ikea-clojure-cup.regions :as regions]
             [ikea-clojure-cup.tool :as tool]
+            [ikea-clojure-cup.common :as common]
             [ikea-clojure-cup.bootstrap :as bootstrap]))
 
 ;; -------------------------
@@ -15,6 +16,13 @@
    [regions/region-modal]
    [tool/tool-view]])
 
+(defn about-page []
+  [:div
+   [regions/region-modal]
+   [:h2 (str "About the " common/long-name)]
+   [:p common/welcome-note]
+   [bootstrap/button {:bs-size :lg :href "/"} "Try it!"]])
+
 (defn current-page []
   [:div#wrap
    [bootstrap/nav-bar
@@ -23,8 +31,11 @@
     [bootstrap/nav {:pull-right true}
      [bootstrap/nav-item {:title "Change region"
                           :on-click #(swap! regions/region-state dissoc :region)}
-      (get-in @regions/region-state [:region :name])]
+      (str "Region: " (get-in @regions/region-state [:region :name]))]
+
+     [bootstrap/nav-item {:title "About" :href "/about"} "About"]
      [bootstrap/nav-item {:title "Start over" :bs-style :danger
+                          :href "/"
                           :on-click tool/start-over} "Start over"]]]
    [:div.container
     [:div#main
@@ -41,6 +52,9 @@
 
 (secretary/defroute "/" []
   (session/put! :current-page #'home-page))
+
+(secretary/defroute "/about" []
+  (session/put! :current-page #'about-page))
 
 ;; -------------------------
 ;; Initialize app

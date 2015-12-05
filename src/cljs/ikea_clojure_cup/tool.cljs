@@ -5,7 +5,8 @@
             [ikea-clojure-cup.select-items :as select-items]
             [ikea-clojure-cup.car :as car]
             [ikea-clojure-cup.calculate :as calc]
-            [ikea-clojure-cup.pack-it :as pack-it]))
+            [ikea-clojure-cup.pack-it :as pack-it]
+            [ikea-clojure-cup.common :as common]))
 
 (def default-state
   {:state :select-items
@@ -51,11 +52,7 @@
                         :role "alert"
                         :on-click #(swap! tool-state assoc :shown-intro? true)}
       [:span {:aria-hidden true} "⨉"]]
-     [:p
-      "Don't you hate it when you reach your car with all your recently purchased IKEA goodies only to realise they don't fit!
-You then proceed to play IKEA-car-boot Tetris and often end up opening all the boxes in order to get the contents in.
-Well those days are over thanks to IFLOGS, the IKEA Fleet Logistics System!
-Simply select the items you wish to purchase and tell us the dimensions of your car boot and we'll let you know if it fits AND how to get it in (no more Tetris!)."]]))
+     [:p common/welcome-note]]))
 
 (defn tool-view
   []
