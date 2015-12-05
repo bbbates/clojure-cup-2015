@@ -23,12 +23,12 @@
                  [venantius/accountant "0.1.5" :exclusions [org.clojure/tools.reader]]
                  [cljs-ajax "0.5.1"]
                  [hickory "0.5.4"]
-
-                 ]
+                 [http-kit "2.1.18"]]
 
   :plugins [[lein-environ "1.0.1"]
             [lein-cljsbuild "1.1.1"]
             [icm-consulting/lein-less "1.7.6-SNAPSHOT"]
+            [lein-ring "0.9.7"]
             [lein-asset-minifier "0.2.2"
              :exclusions [org.clojure/clojure]]]
 
