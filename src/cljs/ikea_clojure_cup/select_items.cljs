@@ -145,6 +145,40 @@
           #(swap! trolley-state update-in [:items] conj item)])
        (group-items (:items @trolley-state))))]])
 
+(defn trolley-preview
+  [trolley-state]
+  (let [items (:items @trolley-state)
+        packages (reduce (fn [all item]
+                           (concat all (map #(assoc % :item item) (:packages item))))
+                         [] items)
+        scale 0.2
+        total-height
+        (* scale (+
+                  (reduce + (map (fn [{:keys [width height length]}] (min width height length)) packages))
+                  (* (count packages) 2)))
+        max-width (* scale (apply max (map (fn [{:keys [width height length]}] (max width height length)) packages)))]
+    [:svg {:width "100%"
+           :view-box (clojure.string/join " " [0 0 max-width total-height])}
+     [:g {:stroke :black
+          :stroke-width (* scale 1)}
+      (:rects
+       (reduce
+        (fn [{:keys [offset] :as m} {:keys [width height length] :as package}]
+          (let [next-offset (+ offset (* scale 2))
+                height (* scale (min width height length))
+                width (* scale (max width height length))]
+            (-> m
+                (update :rects conj
+                        [:rect {:key (hash package)
+                                :x 0
+                                :y (+ offset (* scale 1))
+                                :height height
+                                :width width
+                                :fill :transparent}])
+                (update :offset + (* scale 2) height))))
+        {:offset 0 :rects nil}
+        packages))]]))
+
 (defn select-items-view
   [trolley-state progress-fn]
   [:section.select-items
@@ -155,7 +189,9 @@
     [:div.search
      [item-search trolley-state]
      [trolley-list-contents trolley-state]]
-    [:div.preview]]
+    [:div.preview
+     [:div
+      [trolley-preview trolley-state]]]]
    [:footer
     [bootstrap/button-toolbar
     [bootstrap/button {:bs-size :lg

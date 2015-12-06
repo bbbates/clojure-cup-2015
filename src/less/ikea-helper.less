@@ -204,9 +204,19 @@ You also need to include this conditional style in the <head> of your HTML file 
       }
     }
 
-    .preview {
+    > .preview {
       .hidden-xs();
       .make-sm-column(6);
+
+      background-image: url("../img/shopping-cart-bg.png");
+      background-position: bottom left;
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      > div {
+        padding-bottom: 8%;
+        padding-left: 12%;
+      }
     }
   }
 
