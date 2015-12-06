@@ -47,5 +47,7 @@
          [:h3 "Preview:"]
          (if (= :no (:result result-state))
            [:p "N/A"]
-           [:p [:iframe {:width "800" :height "500" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]])]]])))
+           [:p
+            "In the below box, you can pan around and zoom in and out to see how to stack your packages."
+            [:iframe {:width "800" :height "500" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]])]]])))
 
