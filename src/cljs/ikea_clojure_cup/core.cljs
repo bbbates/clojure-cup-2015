@@ -54,8 +54,8 @@
     [:br]
     [:sup "© "]
     [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd B.V 2010"]
-    [:div.serial-text.pull-right "AA-498638-1"]
-    [:div.serial-number.pull-right (first (shuffle (range 10000 20000)))]]])
+    [:div.serial-text.pull-right.hidden-xs "AA-498638-1"]
+    [:div.serial-number.pull-right.hidden-xs (first (shuffle (range 10000 20000)))]]])
 
 
 ;; -------------------------
