@@ -156,7 +156,7 @@
          ^{:key (:id item)}
          [trolley-item item
           (partial remove-item-from-trolley trolley-state (:id item))
-          #(swap! trolley-state update-in [:items] conj item)
+          #(swap! trolley-state update-in [:items] conj (assoc item :packages (transform-packages (:packages item))))
           #(swap! trolley-state assoc-in [::flatpack-item] (when % (:id item)))])
        (group-items (:items @trolley-state))))]])
 
