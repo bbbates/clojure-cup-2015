@@ -67,8 +67,8 @@
    [:div#footer.container
     "IFLOGS is not endorsed or affiliated with IKEA."
     [:br]
-    [:sup "© "]
-    [:a {:href "http://www.icm-consulting.com.au/"} "ICM Consulting Pty Ltd B.V 2010"]
+    [:sup "©"]
+    [:a {:href "http://www.icm-consulting.com.au/" :target "_blank" :rel "external"} "ICM Consulting Pty Ltd B.V 2010"]
     [:div.serial-text.pull-right.hidden-xs "AA-498638-1"]
     [:div.serial-number.pull-right.hidden-xs (first (shuffle (range 10000 20000)))]]])
 
