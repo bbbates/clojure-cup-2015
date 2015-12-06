@@ -22,7 +22,7 @@
   (html
    [:html
     [:head
-     [:title "IKEA Fleet Logistic System"]
+     [:title "IKEA Fleet Logistics System"]
      [:meta {:charset "utf-8"}]
      [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
      (include-css (if (env :dev) "css/ikea-helper.css" "css/ikea-helper.min.css"))]

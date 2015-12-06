@@ -52,7 +52,7 @@
       [bind-fields
        [:div {:field :autocomplete
               :id :term
-              :input-placeholder "Search for IKEA Product by Name or Department"
+              :input-placeholder "Search for IKEA Product by Name"
               :data-source fetch-search-results
               :input-class "form-control"
               :list-class "typeahead-list"
