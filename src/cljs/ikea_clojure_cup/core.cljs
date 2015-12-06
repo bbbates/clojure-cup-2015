@@ -32,7 +32,6 @@
   [:div
    [:div#wrap
     [bootstrap/nav-bar
-    [bootstrap/nav-bar-collapse
      [bootstrap/nav-bar-brand
       [:div
        [:img {:src "img/iflogs-sm.png"}]
@@ -46,7 +45,7 @@
       [bootstrap/nav-item {:title "About" :href "/about"} "About"]
       [bootstrap/nav-item {:title "Start over" :bs-style :danger
                            :href "/"
-                           :on-click tool/start-over} "Start over"]]]]
+                           :on-click tool/start-over} "Start over"]]]
     [:div.container
      [:div#main
       [(session/get :current-page)]]]]
