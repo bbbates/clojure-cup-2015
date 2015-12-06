@@ -3,6 +3,7 @@
             [ajax.core :refer [GET]]
             [reagent-forms.core :refer [bind-fields]]
             [alandipert.storage-atom :refer [local-storage]]
+            [ikea-clojure-cup.common :as common]
             [ikea-clojure-cup.bootstrap :as bootstrap]))
 
 (defonce region-state (local-storage (atom {:region nil}) :region))
@@ -37,7 +38,7 @@
 (defn- region-selection-copy
   [region-state]
   [:div
-   [:h3 "Welcome to the ITEA Transport Planner" [:small [:em "(Proper name pending)"]]]
+   [:h3 "Welcome to " common/short-name [:small [:em common/long-name]]]
    [:p "Before you begin, select your closest IKEA region."]])
 
 (defn region-modal
