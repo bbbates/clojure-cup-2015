@@ -35,15 +35,10 @@
                      product-id)]
     (- product-id (mod product-id 100))))
 
-(defn get-missing-products [requested-packages packing-details]
-  (let [all (set (map #(-> % :id extract-product-id-from-package-id str) requested-packages))
-        packed (set (map (comp str extract-product-id-from-package-id :id) (-> packing-details first :items)))
-        missing (clojure.set/difference all packed)
-        id-package-map (reduce (fn [m {:keys [id] :as p}]
-                                 (assoc m (str id) p))
-                               {}
-                               requested-packages)]
-    (vals (filter (fn [[k v]] (missing k)) id-package-map))))
+(defn get-missing-products [missing-packages]
+  (->> (group-by (comp extract-product-id-from-package-id :id) missing-packages)
+       (map (comp first val))
+       (set)))
 
 (defn get-missing-packages [requested-packages packing-details]
   (let [all (set (map #(-> % :id str) requested-packages))
@@ -75,8 +70,9 @@
     (merge {:result result
             :details packing-details}
            (when (= :partial result)
-             {:missing (get-missing-products packages packing-details)
-              :packages-missing (get-missing-packages packages packing-details)})
+             (let [pkgs (get-missing-packages packages packing-details)]
+               {:missing (get-missing-products pkgs)
+                :packages-missing pkgs}))
            (when-not (= :no result)
              {:preview {:bins bins :items items}}))))
 
