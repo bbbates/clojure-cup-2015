@@ -37,7 +37,7 @@
 
 (defn get-missing-products [requested-packages packing-details]
   (let [all (set (map #(-> % :id extract-product-id-from-package-id str) requested-packages))
-        packed (set (map (comp extract-product-id-from-package-id :id) (-> packing-details first :items)))
+        packed (set (map (comp str extract-product-id-from-package-id :id) (-> packing-details first :items)))
         missing (clojure.set/difference all packed)
         id-package-map (reduce (fn [m {:keys [id] :as p}]
                                  (assoc m (str id) p))
@@ -54,8 +54,12 @@
 
 (defn pack [{:keys [bins products]}]
   (let [bins (cs/join "," (map bin->string bins))
-        packages (flatten (reduce (fn [v {:keys [packages id name]}]
-                                    (conj v (map-indexed #(assoc %2 :id (+ (* 100 (count v)) %1) :name name) packages)))
+        packages (flatten (reduce (fn [v {:keys [packages id name desc]}]
+                                    (conj v (map-indexed
+                                             #(assoc %2
+                                                :id (+ (* 100 (count v)) %1)
+                                                :name name
+                                                :desc desc) packages)))
                                   []
                                   products))
         items (when (seq packages) (cs/join "," (map package->string packages)))
