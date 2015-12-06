@@ -70,12 +70,12 @@ You also need to include this conditional style in the <head> of your HTML file 
 */
 
 .rotating-image {
-    width: 120px;
-    height: 100px;
-    margin: 20px 0 0 20px;
-    -webkit-animation:spin 3s linear infinite;
-    -moz-animation:spin 3s linear infinite;
-    animation:spin 3s linear infinite;
+  width: 120px;
+  height: 100px;
+  margin: 20px 0 0 20px;
+  -webkit-animation:spin 3s linear infinite;
+  -moz-animation:spin 3s linear infinite;
+  animation:spin 3s linear infinite;
 }
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
@@ -212,33 +212,38 @@ You also need to include this conditional style in the <head> of your HTML file 
 
 }
 
-  .btn {
-    opacity: .7;
-  }
-
-  .btn-danger:hover {
-    background-color: #FCF8EC;
-    opacity: 1;
-  }
-
-  .btn-primary:hover {
-    opacity: 1;
-  }
-
-  .btn-default:hover {
-    opacity: 1;
-  }
-
-  .btn-xs .btn-danger:hover {
-    opacity: 1;
-  }
-
-  .navbar-brand {
-    margin: 2px 0 0 0;
-    padding: 0;
-    width: 500px;
+.btn {
+  opacity: .7;
 }
 
+.btn-danger:hover {
+  background-color: #FCF8EC;
+  opacity: 1;
+}
+
+.btn-primary:hover {
+  opacity: 1;
+}
+
+.btn-default:hover {
+  opacity: 1;
+}
+
+.btn-xs .btn-danger:hover {
+  opacity: 1;
+}
+
+.navbar-brand {
+  margin: 2px 0 0 0;
+  padding: 0;
+  width: 500px;
+}
+.navbar-brand a {
+  text-decoration: none;
+}
+.navbar-brand a:hover {
+  text-decoration: none;
+}
 .navbar-brand > img {
   display: inline;
 }
@@ -247,5 +252,10 @@ You also need to include this conditional style in the <head> of your HTML file 
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
     margin-left: 0;
+  }
+
+.wait {
+    height:150px;
+    width: 300px;
   }
 }

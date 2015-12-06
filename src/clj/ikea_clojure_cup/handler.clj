@@ -14,13 +14,15 @@
 
 (def mount-target
   [:div#app
-   [:h3 "Please wait while loading..."]])
+   [:div.wait.center
+   [:img.rotating-image {:src "img/allanKey.png"}]]
+    [:p.center "Please wait..."]])
 
 (def loading-page
   (html
    [:html
     [:head
-     [:title "Untitled IKEA Logistical Intelligence Simulator 3000"]
+     [:title "IKEA Fleet Logistic System"]
      [:meta {:charset "utf-8"}]
      [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
      (include-css (if (env :dev) "css/ikea-helper.css" "css/ikea-helper.min.css"))]
