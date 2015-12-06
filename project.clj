@@ -22,6 +22,7 @@
                  [secretary "1.2.3"]
                  [venantius/accountant "0.1.5" :exclusions [org.clojure/tools.reader]]
                  [cljs-ajax "0.5.1"]
+                 [cljs-uuid "0.0.4"]
                  [org.clojure/core.async "0.2.374"]
                  [hickory "0.5.4"]
                  [http-kit "2.1.18"]

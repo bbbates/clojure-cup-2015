@@ -17,9 +17,21 @@
 (defn package->string [{:keys [id length width height]}]
   (format "%s:0:0:%sx%sx%s" id length width height))
 
-(defn get-missing [requested-packages packing-details]
-  (let [all (set (map #(-> % :id str) requested-packages))
-        packed (set (map :id (-> packing-details first :items)))
+(defn- s->int
+  [s]
+  (when-not (clojure.string/blank? s)
+    (Integer/parseInt s)))
+
+(defn- extract-product-id-from-package-id
+  [product-id]
+  (let [product-id (if (string? product-id)
+                     (s->int product-id)
+                     product-id)]
+    (- product-id (mod product-id 100))))
+
+(defn get-missing-products [requested-packages packing-details]
+  (let [all (set (map #(-> % :id extract-product-id-from-package-id str) requested-packages))
+        packed (set (map (comp extract-product-id-from-package-id :id) (-> packing-details first :items)))
         missing (clojure.set/difference all packed)
         id-package-map (reduce (fn [m {:keys [id] :as p}]
                                  (assoc m (str id) p))
@@ -27,10 +39,17 @@
                                requested-packages)]
     (vals (filter (fn [[k v]] (missing k)) id-package-map))))
 
+(defn get-missing-packages [requested-packages packing-details]
+  (let [all (set (map #(-> % :id str) requested-packages))
+        packed (set (map :id (-> packing-details first :items)))
+        missing (clojure.set/difference all packed)
+        id-package-map (group-by :id requested-packages)]
+    (map (comp first id-package-map s->int) missing)))
+
 (defn pack [{:keys [bins products]}]
   (let [bins (cs/join "," (map bin->string bins))
         packages (flatten (reduce (fn [v {:keys [packages id name]}]
-                                    (conj v (map #(assoc % :id (count v) :name name) packages)))
+                                    (conj v (map-indexed #(assoc %2 :id (+ (* 100 (count v)) %1) :name name) packages)))
                                   []
                                   products))
         items (when (seq packages) (cs/join "," (map package->string packages)))
@@ -46,7 +65,8 @@
     (merge {:result result
             :details packing-details}
            (when (= :partial result)
-             {:missing (get-missing packages packing-details)})
+             {:missing (get-missing-products packages packing-details)
+              :packages-missing (get-missing-packages packages packing-details)})
            (when-not (= :no result)
              {:preview {:bins bins :items items}}))))
 

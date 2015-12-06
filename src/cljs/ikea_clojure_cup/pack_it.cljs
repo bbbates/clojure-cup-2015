@@ -47,12 +47,14 @@
          [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
 
          [:h3 "Flatpacks:"]
-         [:ol.list-inside
-          (map-indexed
-           (fn [idx {:keys [width height length] :as package}]
-             [:li {:key idx}
-              (str width "cm x " height "cm x " length "cm")])
-           (mapcat :packages (-> @all-state :trolley :items)))]]
+         [:ul.list-inside.list-plain
+          (let [package-ids-missing (->> result-state :packages-missing (map :pkg-id) set)]
+            (map-indexed
+             (fn [idx {:keys [width height length pkg-id] :as package}]
+               [:li {:key idx}
+                [bootstrap/glyph {:glyph (if (package-ids-missing pkg-id) :remove :ok)}]
+                (str " " width "cm x " height "cm x " length "cm")])
+             (mapcat :packages (-> @all-state :trolley :items))))]]
 
         (when-not (= :no (:result result-state))
           [:div.preview
