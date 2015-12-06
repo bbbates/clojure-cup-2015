@@ -69,8 +69,11 @@
    "This product is packaged in " (count packages) " flatpacks or boxes."])
 
 (defn package-total-view
-  [item-container packages]
-  (let [show-popover (atom false)]
+  [item-container packages on-click-fn]
+  (let [show-popover? (atom false)
+        toggle-popover (fn []
+                         (swap! show-popover? not)
+                         (on-click-fn @show-popover?))]
     (fn [_]
       (let [package-count (count packages)]
         (if (zero? package-count)
@@ -78,14 +81,14 @@
            [bootstrap/glyph {:glyph :warning}] "No flatpacks found!"]
 
           [:div
-           [bootstrap/label {:on-click #(swap! show-popover not)}
+           [bootstrap/label {:on-click toggle-popover}
             package-count " flatpack" (when (< 1 package-count) "s")
-            [bootstrap/overlay {:show @show-popover
+            [bootstrap/overlay {:show @show-popover?
                                 :container (reagent/current-component)}
              [package-total-overlay packages]]]])))))
 
 (defn trolley-item
-  [{:keys [desc name image-src packages id count]} remove-fn add-another-fn]
+  [{:keys [desc name image-src packages id count]} remove-fn add-another-fn on-click-fn]
   [bootstrap/list-group-item {:key id :list-item true}
    [:div
     [:div.contents
@@ -103,7 +106,7 @@
                            :on-click remove-fn}
          [bootstrap/glyph {:glyph :remove}] " Remove"]]]]
      [:div
-      [package-total-view (reagent/current-component) packages]
+      [package-total-view (reagent/current-component) packages on-click-fn]
       (when-not (and count (>= 1 count))
         [:h2 "⨉" count])]]
     [:div.preview
@@ -142,12 +145,14 @@
          ^{:key (:id item)}
          [trolley-item item
           (partial remove-item-from-trolley trolley-state (:id item))
-          #(swap! trolley-state update-in [:items] conj item)])
+          #(swap! trolley-state update-in [:items] conj item)
+          #(swap! trolley-state assoc-in [::flatpack-item] (when % (:id item)))])
        (group-items (:items @trolley-state))))]])
 
 (defn trolley-preview
   [trolley-state]
-  (let [items (:items @trolley-state)
+  (let [selected-flatpack-item (::flatpack-item @trolley-state)
+        items (:items @trolley-state)
         packages (reduce (fn [all item]
                            (concat all (map #(assoc % :item item) (:packages item))))
                          [] items)
@@ -158,25 +163,24 @@
                   (* (count packages) 2)))
         max-width (* scale (apply max (map (fn [{:keys [width height length]}] (max width height length)) packages)))]
     [:svg {:width "100%" :height "80%"
-           :view-box (clojure.string/join " " [0 0 max-width total-height])}
+           :view-box (clojure.string/join " " [0 0 max-width (+ 2 total-height)])}
      [:g {:stroke :black
           :stroke-width (* scale 1)}
       (:rects
        (reduce
-        (fn [{:keys [offset] :as m} {:keys [width height length] :as package}]
-          (let [next-offset (+ offset (* scale 2))
-                height (* scale (min width height length))
-                width (* scale (max width height length))]
+        (fn [{:keys [offset] :as m} {:keys [width height length item] :as package}]
+          (let [box-height (* scale (min width height length))
+                box-width (* scale (max width height length))]
             (-> m
                 (update :rects conj
                         [:rect {:key (hash package)
                                 :x 0
-                                :y (+ offset (* scale 1))
-                                :height height
-                                :width width
-                                :fill :transparent}])
-                (update :offset + (* scale 2) height))))
-        {:offset 4 :rects nil}
+                                :y offset
+                                :height box-height
+                                :width box-width
+                                :fill (if (= (:id item) selected-flatpack-item) :black :transparent)}])
+                (update :offset - (* scale 1) box-height))))
+        {:offset total-height :rects nil}
         packages))]]))
 
 (defn select-items-view
