@@ -28,24 +28,39 @@
      [:li "It does not fit!  You'll fit NONE of the packages for your products in your car."]]]
    [bootstrap/button {:bs-size :lg :bs-style :danger :href "/" :on-click tool/start-over} "Try it!"]])
 
+(defn- nav
+  []
+  (let [collapsed? (atom true)]
+    (fn []
+      [bootstrap/nav-bar
+       [:div.navbar-header
+        [:button.navbar-toggle.collapsed
+         {:type :button
+          :on-click #(swap! collapsed? not)
+          :data-toggle :collapse
+          :data-target "#ikea-navbar"
+          :aria-expanded false}
+         [:span.sr-only "Toggle navigation"]
+         (for [x (range 0 3)] [:span.icon-bar {:key x}])]
+        [bootstrap/nav-bar-brand
+         [:div
+          [:img {:src "img/iflogs-sm.png"}]
+          [:a {:title "IFLOGS" :href "/"} "IKEA Fleet Logistics System"]]]]
+
+       [:div.collapse.navbar-collapse {:id :ikea-navbar :class (when-not @collapsed? "in")}
+        [:ul.nav.navbar-nav.pull-right
+         [bootstrap/nav-item {:title "Change region"
+                              :on-click #(swap! regions/region-state dissoc :region)}
+          (str "Region: " (get-in @regions/region-state [:region :name]))]
+         [bootstrap/nav-item {:title "About" :href "/about"} "About"]
+         [bootstrap/nav-item {:title "Start over" :bs-style :danger
+                              :href "/"
+                              :on-click tool/start-over} "Start over"]]]])))
+
 (defn current-page []
   [:div
    [:div#wrap
-    [bootstrap/nav-bar
-     [bootstrap/nav-bar-brand
-      [:div
-       [:img {:src "img/iflogs-sm.png"}]
-       [:a {:title "IFLOGS" :href "/"} "IKEA Fleet Logistics System" ]]]
-     [bootstrap/nav {:pull-left true :class-name :hidden-xs}
-      ]
-     [bootstrap/nav {:pull-right true}
-      [bootstrap/nav-item {:title "Change region"
-                           :on-click #(swap! regions/region-state dissoc :region)}
-       (str "Region: " (get-in @regions/region-state [:region :name]))]
-      [bootstrap/nav-item {:title "About" :href "/about"} "About"]
-      [bootstrap/nav-item {:title "Start over" :bs-style :danger
-                           :href "/"
-                           :on-click tool/start-over} "Start over"]]]
+    [nav]
     [:div.container
      [:div#main
       [(session/get :current-page)]]]]
