@@ -44,5 +44,8 @@
                             :on-click start-over-fn} "Start over"]
          [:h3 "Boot size:"]
          [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
-         [:p (str @all-state)]]]])))
+         [:h3 "Preview:"]
+         (if (= :no (:result result-state))
+           [:p "N/A"]
+           [:p [:iframe {:width "800" :height "500" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]])]]])))
 
