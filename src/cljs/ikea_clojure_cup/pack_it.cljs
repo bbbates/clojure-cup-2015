@@ -30,9 +30,7 @@
                 [:img {:src "img/itDoesNotFit.png"}]]
            :partial [:div
                      [:img {:src "img/itFitsMayBe.png"}]
-                     [:p "You'll have to remove or get creative with the following products:"
-                      [:ul.list-inside
-                       (map #(vector :li.list-inside (-> % :name str)) (:missing result-state))]]])
+                     [:p "You'll have to remove or get creative with the following products:"]])
          [select-items/trolley-list-contents (reagent/cursor all-state [:trolley])]
 
          [bootstrap/button-toolbar
