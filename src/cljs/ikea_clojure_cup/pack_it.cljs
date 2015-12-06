@@ -39,6 +39,18 @@
                                " "
                                [:span.text-muted (:desc product)]] )
                             (:missing result-state))]]])
+         [:h3 "Trolley contents:"]
+
+         [select-items/trolley-list-contents (reagent/cursor all-state [:trolley])]
+
+         [bootstrap/button-toolbar
+          [bootstrap/button {:bs-size :lg
+                             :bs-style :primary
+                             :on-click recalc-progress-fn} "Recalculate"]
+          [bootstrap/button {:title "Start over" :bs-style :danger
+                             :bs-size :lg
+                             :href "/"
+                             :on-click start-over-fn} "Start over"]]
          [:h3 "Flatpacks:"]
          [:ul.list-inside.list-plain
           (let [package-ids-missing (->> result-state :packages-missing (map :pkg-id) set)
@@ -52,20 +64,7 @@
              (mapcat :packages (-> @all-state :trolley :items))))]
 
          [:h3 "Boot size:"]
-         [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
-
-         [:h3 "Trolley contents:"]
-
-         [select-items/trolley-list-contents (reagent/cursor all-state [:trolley])]
-
-         [bootstrap/button-toolbar
-          [bootstrap/button {:bs-size :lg
-                             :bs-style :primary
-                             :on-click recalc-progress-fn} "Recalculate"]
-          [bootstrap/button {:title "Start over" :bs-style :danger
-                             :bs-size :lg
-                             :href "/"
-                             :on-click start-over-fn} "Start over"]]]
+         [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]]
 
         (when-not (= :no (:result result-state))
           [:div.preview
