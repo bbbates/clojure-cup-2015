@@ -22,7 +22,8 @@
   (html
    [:html
     [:head
-     [:title "IKEA Fleet Logistics System"]
+     [:title "IFLOGS"]
+     [:link {:href "img/favicon.png" :type "image/x-icon" :rel "shortcut icon"}]
      [:meta {:charset "utf-8"}]
      [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
      (include-css (if (env :dev) "css/ikea-helper.css" "css/ikea-helper.min.css"))]
