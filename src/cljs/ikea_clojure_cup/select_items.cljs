@@ -176,7 +176,7 @@
                                 :width width
                                 :fill :transparent}])
                 (update :offset + (* scale 2) height))))
-        {:offset 0 :rects nil}
+        {:offset 4 :rects nil}
         packages))]]))
 
 (defn select-items-view
