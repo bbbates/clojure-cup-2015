@@ -39,6 +39,21 @@
                                " "
                                [:span.text-muted (:desc product)]] )
                             (:missing result-state))]]])
+         [:h3 "Flatpacks:"]
+         [:ul.list-inside.list-plain
+          (let [package-ids-missing (->> result-state :packages-missing (map :pkg-id) set)
+                missing? #(or (= :no (:result result-state)) (package-ids-missing %))]
+            (map-indexed
+             (fn [idx {:keys [width height length pkg-id] :as package}]
+               [:li {:key idx}
+                [:div {:class-name (if (missing? pkg-id) "not-ok" "ok")}
+                [bootstrap/glyph {:glyph (if (missing? pkg-id) :remove :ok)}]
+                (str " " width "cm x " height "cm x " length "cm")]])
+             (mapcat :packages (-> @all-state :trolley :items))))]
+
+         [:h3 "Boot size:"]
+         [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
+
          [:h3 "Trolley contents:"]
 
          [select-items/trolley-list-contents (reagent/cursor all-state [:trolley])]
@@ -50,21 +65,7 @@
           [bootstrap/button {:title "Start over" :bs-style :danger
                              :bs-size :lg
                              :href "/"
-                             :on-click start-over-fn} "Start over"]]
-         [:h3 "Boot size:"]
-         [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
-
-         [:h3 "Flatpacks:"]
-         [:ul.list-inside.list-plain
-          (let [package-ids-missing (->> result-state :packages-missing (map :pkg-id) set)
-                missing? #(or (= :no (:result result-state)) (package-ids-missing %))]
-            (map-indexed
-             (fn [idx {:keys [width height length pkg-id] :as package}]
-               [:li {:key idx}
-                [:div {:class-name (if (missing? pkg-id) "not-ok" "ok")}
-                [bootstrap/glyph {:glyph (if (missing? pkg-id) :remove :ok)}]
-                (str " " width "cm x " height "cm x " length "cm")]])
-             (mapcat :packages (-> @all-state :trolley :items))))]]
+                             :on-click start-over-fn} "Start over"]]]
 
         (when-not (= :no (:result result-state))
           [:div.preview
