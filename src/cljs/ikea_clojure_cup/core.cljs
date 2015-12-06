@@ -32,10 +32,13 @@
   [:div
    [:div#wrap
     [bootstrap/nav-bar
+    [bootstrap/nav-bar-collapse
      [bootstrap/nav-bar-brand
       [:div
-      [:img {:src "img/iflogs-sm.png"}]
-      [:a {:title "IFLOGS" :href "/"} "IKEA Fleet Logistics System" ]]]
+       [:img {:src "img/iflogs-sm.png"}]
+       [:a {:title "IFLOGS" :href "/"} "IKEA Fleet Logistics System" ]]]
+     [bootstrap/nav {:pull-left true :class-name :hidden-xs}
+      ]
      [bootstrap/nav {:pull-right true}
       [bootstrap/nav-item {:title "Change region"
                            :on-click #(swap! regions/region-state dissoc :region)}
@@ -43,7 +46,7 @@
       [bootstrap/nav-item {:title "About" :href "/about"} "About"]
       [bootstrap/nav-item {:title "Start over" :bs-style :danger
                            :href "/"
-                           :on-click tool/start-over} "Start over"]]]
+                           :on-click tool/start-over} "Start over"]]]]
     [:div.container
      [:div#main
       [(session/get :current-page)]]]]
