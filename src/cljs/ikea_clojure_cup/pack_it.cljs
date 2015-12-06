@@ -51,5 +51,5 @@
            [:p "N/A"]
            [:div
             [:p.hidden-xs "In the below box, you can pan around and zoom in and out to see how to stack your packages."]
-            [:iframe.hidden-xs {:width "500" :height "500" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]
+            [:iframe.hidden-xs {:width "555" :height "555" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]
             [:p.visible-xs "3D preview showing how stack the packages is not available when viewing on small screen devices. Please try again on a larger screen."]])]]])))
