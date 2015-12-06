@@ -59,7 +59,6 @@
       (cs/replace #"scene.fog.color, 1" "0x000000, 0")
       (cs/replace #"antialias: false" "antialias: false, alpha: true")
       (cs/replace #"legend.style.color = \"#ffffff\"" "legend.style.color =\"#000\"")
-      (cs/replace #"contents legend" "Flat packs legend:")
       (cs/replace #"createLegend\(container\);" "")))
 
 (defn preview [bins items]
