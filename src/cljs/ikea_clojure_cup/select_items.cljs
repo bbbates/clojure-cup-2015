@@ -19,7 +19,10 @@
          {:params {:region (:code region)
                    :lang (:lang region)
                    :query term}
-          :handler (fn [resp] (async/put! data-ch (take number-search-results resp)))})
+          :handler (fn [resp] (async/put! data-ch (take number-search-results resp)))
+          :error-handler (fn [resp]
+                           (println "*** ERROR While performing search ***")
+                           (async/put! data-ch []))})
     data-ch))
 
 (defn item-preview
