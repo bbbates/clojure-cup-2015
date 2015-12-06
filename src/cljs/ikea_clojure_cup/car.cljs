@@ -54,13 +54,15 @@
         [:h2 "Step 2"]
         [:h3 "Tell us about your transportation fleet"]]
        [:main.select-items-content
-        [bootstrap/nav {:bs-style :pills :active-key @mode :on-select #(reset! mode %)}
-         [bootstrap/nav-item {:event-key 0} "Only one vehicle"]
-         [bootstrap/nav-item {:event-key 1} "My fleet is vast"]]
+        [:div.entry
+         [bootstrap/nav {:bs-style :pills :active-key @mode :on-select #(reset! mode %)}
+          [bootstrap/nav-item {:event-key 0} "Only one vehicle"]
+          [bootstrap/nav-item {:event-key 1} "My fleet is vast"]]
 
-        (case @mode
-          0 [single-vehicle-entry (reagent/cursor (partial vehicle-get car-state) 0)]
-          1 [multiple-vehicle-entry (partial vehicle-get car-state)])]
+         (case @mode
+           0 [single-vehicle-entry (reagent/cursor (partial vehicle-get car-state) 0)]
+           1 [multiple-vehicle-entry (partial vehicle-get car-state)])]
+        [:div.preview]]
        [:footer
         [bootstrap/button-toolbar
         [bootstrap/button {:bs-size :lg

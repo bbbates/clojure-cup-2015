@@ -222,6 +222,24 @@ You also need to include this conditional style in the <head> of your HTML file 
 
 }
 
+.enter-car-info {
+  main {
+      .make-row();
+    .entry {
+      .make-xs-column(12);
+      .make-sm-column(6);
+      nav {
+        margin-bottom: 10px;
+      }
+    }
+    > .preview {
+      .hidden-xs();
+      .make-sm-column(6);
+    }
+  }
+}
+
+
 .btn {
   opacity: 1;
 }
@@ -272,7 +290,7 @@ iframe {
     margin-left: 0;
   }
 
-.wait {
+  .wait {
     height:150px;
     width: 300px;
   }

@@ -3,13 +3,10 @@
 ----------------
 - Build
 ----------------
-- Use minified js
 
 ----------------
 - All screens
 ----------------
-- button styling
-- about/instructions
 
 ----------------
 - Step 1
