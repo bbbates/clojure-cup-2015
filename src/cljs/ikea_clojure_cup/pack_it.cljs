@@ -56,12 +56,13 @@
 
          [:h3 "Flatpacks:"]
          [:ul.list-inside.list-plain
-          (let [package-ids-missing (->> result-state :packages-missing (map :pkg-id) set)]
+          (let [package-ids-missing (->> result-state :packages-missing (map :pkg-id) set)
+                missing? #(or (= :no (:result result-state)) (package-ids-missing %))]
             (map-indexed
              (fn [idx {:keys [width height length pkg-id] :as package}]
                [:li {:key idx}
-                [:div {:class-name (if (package-ids-missing pkg-id) "not-ok" "ok")}
-                [bootstrap/glyph {:glyph (if (or (= :no (:result result-state)) (package-ids-missing pkg-id)) :remove :ok)}]
+                [:div {:class-name (if (missing? pkg-id) "not-ok" "ok")}
+                [bootstrap/glyph {:glyph (if (missing? pkg-id) :remove :ok)}]
                 (str " " width "cm x " height "cm x " length "cm")]])
              (mapcat :packages (-> @all-state :trolley :items))))]]
 
