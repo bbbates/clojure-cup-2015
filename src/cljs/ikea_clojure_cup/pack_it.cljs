@@ -45,18 +45,8 @@
                              :on-click start-over-fn} "Start over"]]
          [:h3 "Boot size:"]
          [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
-<<<<<<< HEAD
+
          [:h3 "Flatpacks:"]
-         [:ol.list-inside (map (fn [{:keys [width height length]}] [:li (str width "cm x " height "cm x " length "cm")]) (mapcat :packages (-> @all-state :trolley :items)))]
-         [:h3 "Preview:"]
-         (if (= :no (:result result-state))
-           [:p "N/A"]
-           [:div
-            [:p.hidden-xs "In the below box, you can pan around and zoom in and out to see how to stack your packages."]
-            [:iframe.hidden-xs {:width "555" :height "555" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]
-            [:p.visible-xs "3D preview showing how stack the packages is not available when viewing on small screen devices. Please try again on a larger screen."]])]]])))
-=======
-         [:h3 "Packages:"]
          [:ol.list-inside
           (map-indexed
            (fn [idx {:keys [width height length] :as package}]
@@ -72,4 +62,4 @@
             [:div
              [:p "In the box below, you can pan around and zoom in and out to see how to stack your packages."]
              [:iframe {:width "555" :height "555" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]]]])]])))
->>>>>>> 3a7247409ac3652b2f25dde0239bfaf24fd14f40
+
