@@ -39,7 +39,7 @@
                                :class       input-class
                                :value       (let [v (get id)]
                                               (if-not (iterable? v)
-                                                v (first v)))
+                                                v (:name (first v))))
                                :on-focus    #(when clear-on-focus? (save! id nil))
                                :on-blur     #(when-not @mouse-on-list?
                                                (reset! typeahead-hidden? true)

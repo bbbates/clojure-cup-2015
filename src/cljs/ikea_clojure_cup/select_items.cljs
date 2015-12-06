@@ -1,6 +1,7 @@
 (ns ikea-clojure-cup.select-items
   (:require [ajax.core :refer [GET]]
             [cljs.core.async :as async]
+            [cljs-uuid.core :as uuid]
             [reagent.core :as reagent :refer [atom]]
             [reagent-forms.core :refer [bind-fields]]
             [clojure.string :as cs]
@@ -37,6 +38,10 @@
     {:on-click #(swap! trolley-state update-in [:items] conj (::selected-item @search-state))}
     [bootstrap/glyph {:glyph :plus}] " Add to trolley"]])
 
+(defn- transform-packages
+  [packages]
+  (map #(assoc % :pkg-id (str (uuid/make-random))) packages))
+
 (defn select-item!
   [search-state trolley-state item]
   (let [region (:region @region-state)]
@@ -46,7 +51,7 @@
                    :product-context (:product-context item)
                    :product-id (:id item)}
           :handler (fn [resp]
-                     (swap! search-state assoc ::selected-item (assoc item :packages resp))
+                     (swap! search-state assoc ::selected-item (assoc item :packages (transform-packages resp)))
                      (swap! trolley-state update-in [:items] conj (::selected-item @search-state)))})))
 
 (defn item-search
