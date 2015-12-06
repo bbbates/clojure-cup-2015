@@ -151,13 +151,13 @@
         packages (reduce (fn [all item]
                            (concat all (map #(assoc % :item item) (:packages item))))
                          [] items)
-        scale 0.2
+        scale 0.2 ;;magic number born from guesstimation
         total-height
         (* scale (+
                   (reduce + (map (fn [{:keys [width height length]}] (min width height length)) packages))
                   (* (count packages) 2)))
         max-width (* scale (apply max (map (fn [{:keys [width height length]}] (max width height length)) packages)))]
-    [:svg {:width "100%"
+    [:svg {:width "100%" :height "80%"
            :view-box (clojure.string/join " " [0 0 max-width total-height])}
      [:g {:stroke :black
           :stroke-width (* scale 1)}
