@@ -14,11 +14,12 @@
               (let [d (filter-fn m)
                     units (map #(cs/split % #" ") d)]
                 (conj v {:dimensions-and-weight (map #(-> (re-find #"\d+" %) Integer/parseInt) d)
-                         :packages (-> (filter-fn (first (s/select (s/class "measure-quantity") m)))
-                                       first
-                                       (cs/split #" ")
-                                       first
-                                       Integer/parseInt)
+                         :packages (let [p (first (filter-fn (first (s/select (s/class "measure-quantity") m))))]
+                                     (when p
+                                       (-> p
+                                           (cs/split #" ")
+                                           first
+                                           Integer/parseInt)))
                          :dimension-unit (-> units first last)
                          :weight-unit (-> units last last)})))
             []
