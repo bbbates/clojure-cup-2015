@@ -38,7 +38,7 @@
 (defn- region-selection-copy
   [region-state]
   [:div
-   [:h3 "Welcome to " common/short-name [:small [:em common/long-name]]]
+   [:h3 "Welcome to " common/short-name [:p [:small [:em common/long-name]]]]
    [:p "Before you begin, select your closest IKEA region."]])
 
 (defn region-modal
