@@ -44,7 +44,15 @@
                              :href "/"
                              :on-click start-over-fn} "Start over"]]
          [:h3 "Boot size:"]
-         [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]]
+         [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
+         [:h3 "Packages:"]
+         [:ol.list-inside
+          (map-indexed
+           (fn [idx {:keys [width height length] :as package}]
+             [:li {:key idx}
+              (str width "cm x " height "cm x " length "cm")])
+           (mapcat :packages (-> @all-state :trolley :items)))]]
+
         (when-not (= :no (:result result-state))
           [:div.preview
            [bootstrap/alert {:id :small-device-alert :bs-style :info}

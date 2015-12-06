@@ -5,6 +5,9 @@
             [hickory.core :as hick]
             [clojure.string :as cs]))
 
+(defn- extract-int [string]
+  (-> (re-find #"\d+" string) Integer/parseInt))
+
 (defn- get-hick-packages [site-htree]
   ;(s/or ..) doesn't work so have to use concat
   (let [table-rows (concat (s/select (s/class "ikea-measurements-table-row") site-htree)
@@ -25,6 +28,15 @@
             []
             table-rows)))
 
+(defn- get-hick-sub-product-packages [site-htree]
+  (map (fn [{:keys [content]}]
+         {:width (extract-int (first content))
+          :height (extract-int(nth content 2))
+          :length (extract-int (nth content 4))})
+       (filter #(.contains (-> % :content first) "Width")
+               (s/select (s/child (s/class "ikea-measurements")
+                                  (s/tag :p)) site-htree))))
+
 (defn- transform-packages [hick-packages]
   (reduce (fn [v {:keys [dimensions-and-weight packages weight-unit dimension-unit]}]
             (conj v {:width (nth dimensions-and-weight 0)
@@ -39,8 +51,10 @@
 
 (defn product [region lang product-context id]
   (let [url (format "http://m.ikea.com/%s/%s/catalog/products/%s/%s/measurements/" region lang product-context id)
-        response (http-kit/get url)]
-    (transform-packages (get-hick-packages (-> @response :body hick/parse hick/as-hickory))) ))
+        response (http-kit/get url)
+        site-htree (-> @response :body hick/parse hick/as-hickory)]
+    (into (transform-packages (get-hick-packages site-htree))
+          (get-hick-sub-product-packages site-htree))))
 
 ;; (count (get-hick-packages single))
 ;; (count (get-hick-packages multi))
@@ -55,4 +69,3 @@
 ;;   (product "au" "en" "spr" "39111083")
   )
 
-(def spr-sample )
