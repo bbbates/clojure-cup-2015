@@ -33,7 +33,9 @@
    [:div#wrap
     [bootstrap/nav-bar
      [bootstrap/nav-bar-brand
-      [:a {:title "IKEA" :href "/"} "IKEA"]]
+      [:div
+      [:img {:src "img/iflogs-sm.png"}]
+      [:a {:title "IFLOGS" :href "/"} "IKEA Fleet Logistics System" ]]]
      [bootstrap/nav {:pull-right true}
       [bootstrap/nav-item {:title "Change region"
                            :on-click #(swap! regions/region-state dissoc :region)}
