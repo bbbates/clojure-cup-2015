@@ -53,7 +53,7 @@
                               :on-click #(swap! regions/region-state dissoc :region)}
           (str "Region: " (get-in @regions/region-state [:region :name]))]
          [bootstrap/nav-item {:title "About" :href "/about"} "About"]
-         [bootstrap/nav-item {:title "Vote for Us" :target "_blank" :href "http://clojurecup.com/teams/"} [bootstrap/glyph {:glyph :thumbs-up}] " Vote for Us"]
+         [bootstrap/nav-item {:title "Vote for ICMers" :target "_blank" :href "http://clojurecup.com/teams/"} [bootstrap/glyph {:glyph :thumbs-up}] " Vote for Us"]
          [bootstrap/nav-item {:title "Start over" :bs-style :danger
                               :href "/"
                               :on-click tool/start-over} "Start over"]]]])))
