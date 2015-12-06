@@ -78,8 +78,7 @@
            [bootstrap/glyph {:glyph :warning}] "No flatpacks found!"]
 
           [:div
-           [bootstrap/label {:on-mouse-over #(reset! show-popover true)
-                             :on-mouse-leave #(reset! show-popover false)}
+           [bootstrap/label {:on-click #(swap! show-popover not)}
             package-count " flatpack" (when (< 1 package-count) "s")
             [bootstrap/overlay {:show @show-popover
                                 :container (reagent/current-component)}
