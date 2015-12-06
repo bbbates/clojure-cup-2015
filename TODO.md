@@ -17,6 +17,7 @@
 - After selecting item from autocomplete, clear text box
 - Wish list import
 - Add examples e.g. Example products to populate their trolley with (randomly selected maybe?)
+- List item formatting problems
 
 ----------------
 - Step 2
