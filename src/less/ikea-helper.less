@@ -213,7 +213,7 @@ You also need to include this conditional style in the <head> of your HTML file 
 }
 
 .btn {
-  opacity: .7;
+  opacity: 1;
 }
 
 .btn-danger:hover {
@@ -246,6 +246,10 @@ You also need to include this conditional style in the <head> of your HTML file 
 }
 .navbar-brand > img {
   display: inline;
+}
+.navbar-default {
+  background-color: @btn-primary-color;
+  border-color: @btn-primary-color;
 }
 
 @media (min-width: 768px) {
