@@ -30,7 +30,17 @@
                 [:img {:src "img/itDoesNotFit.png"}]]
            :partial [:div
                      [:img {:src "img/itFitsMayBe.png"}]
-                     [:p "You'll have to remove or get creative with the following products:"]])
+                     [:p "You'll have to remove or get creative with the following products:"
+                      [:ul.list-inside
+                       (map (fn [product]
+                              (println product)
+                              [:li.list-inside
+                               (-> product :name)
+                               " "
+                               [:span.text-muted (:desc product)]] )
+                            (:missing result-state))]]])
+         [:h3 "Trolley contents:"]
+
          [select-items/trolley-list-contents (reagent/cursor all-state [:trolley])]
 
          [bootstrap/button-toolbar
@@ -51,7 +61,8 @@
              (fn [idx {:keys [width height length pkg-id] :as package}]
                [:li {:key idx}
                 [bootstrap/glyph {:glyph (if (package-ids-missing pkg-id) :remove :ok)}]
-                (str " " width "cm x " height "cm x " length "cm")])
+                (str " " width "cm x " height "cm x " length "cm")
+                [bootstrap/label name]])
              (mapcat :packages (-> @all-state :trolley :items))))]]
 
         (when-not (= :no (:result result-state))
