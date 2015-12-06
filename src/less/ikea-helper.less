@@ -121,50 +121,6 @@ You also need to include this conditional style in the <head> of your HTML file 
     .search {
       .make-xs-column(12);
       .make-sm-column(6);
-      .trolley-contents {
-        ul {
-          li {
-            list-style: none;
-            > div {
-              .make-row();
-              .contents {
-                .make-xs-column(9);
-                > div:first-child {
-                  .make-xs-column(10);
-                  h4 {
-                    margin-top: 0px;
-                  }
-                }
-                > div:last-child {
-                  padding-top: 0.3em;
-                  .make-xs-column(2);
-                }
-
-                .label {
-                  cursor: pointer;
-                }
-
-              }
-              .preview {
-                .make-xs-column(3);
-                text-align: center;
-                .thumbnail {
-                  margin-bottom: 0px;
-                  img {
-                    .size(5em; 5em);
-                  }
-                }
-              }
-            }
-          }
-        }
-
-        #package-popover {
-          min-width: 200px;
-
-        }
-
-      }
 
       #search-results {
         position: static;
@@ -222,6 +178,52 @@ You also need to include this conditional style in the <head> of your HTML file 
 
 }
 
+.trolley-contents {
+  ul {
+    li {
+      list-style: none;
+      > div {
+        .make-row();
+        .contents {
+          .make-xs-column(9);
+          > div:first-child {
+            .make-xs-column(10);
+            h4 {
+              margin-top: 0px;
+            }
+          }
+          > div:last-child {
+            padding-top: 0.3em;
+            .make-xs-column(2);
+          }
+
+          .label {
+            cursor: pointer;
+          }
+
+        }
+        .preview {
+          .make-xs-column(3);
+          text-align: center;
+          .thumbnail {
+            margin-bottom: 0px;
+            img {
+              .size(5em; 5em);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #package-popover {
+    min-width: 200px;
+
+  }
+
+}
+
+
 .enter-car-info {
   main {
     .make-row();
@@ -252,6 +254,34 @@ You also need to include this conditional style in the <head> of your HTML file 
       .make-sm-column(6);
     }
   }
+}
+
+.pack-it {
+  main {
+    .make-row();
+
+    .results {
+      .make-xs-column(12);
+      .make-sm-column(6);
+    }
+
+    .preview {
+      .make-xs-column(12);
+      .make-sm-column(6);
+
+      #small-device-alert {
+        .visible-xs();
+      }
+
+      .three-dee-view {
+        .hidden-xs();
+      }
+    }
+
+  }
+
+
+
 }
 
 
