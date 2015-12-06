@@ -164,9 +164,10 @@
         (* scale (+
                   (reduce + (map (fn [{:keys [width height length]}] (min width height length)) packages))
                   (* (count packages) 2)))
-        max-width (* scale (apply max (map (fn [{:keys [width height length]}] (max width height length)) packages)))]
+        max-width (* scale (or (apply max (map (fn [{:keys [width height length]}] (max width height length)) packages)) 0))]
     [:svg {:width "100%" :height "80%"
-           :view-box (clojure.string/join " " [0 0 max-width (+ 2 total-height)])}
+           :view-box (clojure.string/join " " [0 0 max-width total-height])
+           :preserve-aspect-ratio "xMinYMax"}
      [:g {:stroke :black
           :stroke-width (* scale 1)}
       (:rects
@@ -178,7 +179,7 @@
                 (update :rects conj
                         [:rect {:key (hash package)
                                 :x 0
-                                :y offset
+                                :y (- offset box-height)
                                 :height box-height
                                 :width box-width
                                 :fill (if (= (:id item) selected-flatpack-item) :black :transparent)}])
