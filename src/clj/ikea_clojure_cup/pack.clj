@@ -33,8 +33,8 @@
                                     (conj v (map #(assoc % :id (count v) :name name) packages)))
                                   []
                                   products))
-        items (cs/join "," (map package->string packages))
-        url (format "http://www.packit4me.com/api/call/raw?bins=%s&items=%s" bins items)
+        items (when (seq packages) (cs/join "," (map package->string packages)))
+        url (format "http://www.packit4me.com/api/call/raw?bins=%s&items=%s" bins (or items "0:0:0:0x0x0"))
         response (http-kit/post url)
         packing-details (json/read-str (:body @response) :key-fn keyword)
         requested-items-count (count packages)
@@ -62,7 +62,7 @@
       (cs/replace #"createLegend\(container\);" "")))
 
 (defn preview [bins items]
-  (let [response (http-kit/post (format "http://www.packit4me.com/api/call/preview?bins=%s&items=%s&binId=0" bins items))]
+  (let [response (http-kit/post (format "http://www.packit4me.com/api/call/preview?bins=%s&items=%s&binId=0" bins (if (seq items) items "0:0:0:0x0x0")))]
     (transform-preview (:body @response))))
 
 
