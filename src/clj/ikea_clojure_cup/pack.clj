@@ -12,10 +12,16 @@
 ;;   )
 
 (defn bin->string [{:keys [id depth width height]}]
-  (format "%s:0:%sx%sx%s" id depth width height))
+  (format "%s:0:%sx%sx%s" id depth height width))
 
 (defn package->string [{:keys [id length width height]}]
-  (format "%s:0:0:%sx%sx%s" id length width height))
+  ;;   (format "%s:0:0:%sx%sx%s" id width height length) ;;not bad
+;;   (format "%s:0:0:%sx%sx%s" id  width  length height)
+;;   (format "%s:0:0:%sx%sx%s" id  height width length)
+;;   (format "%s:0:0:%sx%sx%s" id  height length width)
+  (format "%s:0:0:%sx%sx%s" id  length height width) ;best
+;;   (format "%s:0:0:%sx%sx%s" id  length width height) ;;crap
+  )
 
 (defn get-missing [requested-packages packing-details]
   (let [all (set (map #(-> % :id str) requested-packages))
