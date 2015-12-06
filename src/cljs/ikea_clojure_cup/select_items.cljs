@@ -64,9 +64,9 @@
 
 (defn package-total-overlay
   [packages]
-  [bootstrap/pop-over {:id "package-popover" :title (str (count packages) " packages")
+  [bootstrap/pop-over {:id "package-popover" :title (str (count packages) " flatpacks")
                        :placement :bottom}
-   "This product comes in " (count packages) " packages"])
+   "This product is packaged in " (count packages) " flatpacks or boxes."])
 
 (defn package-total-view
   [item-container packages]
@@ -75,19 +75,18 @@
       (let [package-count (count packages)]
         (if (zero? package-count)
           [bootstrap/label {:bs-style :warning}
-           [bootstrap/glyph {:glyph :warning}] "No packages found!"]
+           [bootstrap/glyph {:glyph :warning}] "No flatpacks found!"]
 
           [:div
-           [bootstrap/label {:on-mouse-over #(reset! show-popover true)
-                             :on-mouse-leave #(reset! show-popover false)}
-            package-count " package" (when (< 1 package-count) "s")
+           [bootstrap/label {:on-click #(swap! show-popover not)}
+            package-count " flatpack" (when (< 1 package-count) "s")
             [bootstrap/overlay {:show @show-popover
                                 :container (reagent/current-component)}
              [package-total-overlay packages]]]])))))
 
 (defn trolley-item
-  [idx {:keys [desc name image-src packages id]} remove-fn add-another-fn]
-  [bootstrap/list-group-item {:key idx :list-item true}
+  [{:keys [desc name image-src packages id count]} remove-fn add-another-fn]
+  [bootstrap/list-group-item {:key id :list-item true}
    [:div
     [:div.contents
      [:div
@@ -103,15 +102,33 @@
                            :bs-style :danger
                            :on-click remove-fn}
          [bootstrap/glyph {:glyph :remove}] " Remove"]]]]
-     [:div [package-total-view (reagent/current-component) packages]]]
+     [:div
+      [package-total-view (reagent/current-component) packages]
+      (when-not (and count (>= 1 count))
+        [:h2 "⨉" count])]]
     [:div.preview
      [bootstrap/thumbnail {:src image-src :responsive true}]]]])
 
+(defn- remove-first
+  "remove the first item in the coll where the value of k matches v"
+  [coll k v]
+  (let [first-part (take-while #(not= (k %) v) coll)]
+    (concat
+     first-part
+     (take-last (dec (- (count coll) (count first-part))) coll))))
+
 (defn- remove-item-from-trolley
-  [trolley-state idx]
+  [trolley-state id]
   (let [items (:items @trolley-state)]
-    (swap! trolley-state assoc-in [:items]
-           (concat (take idx items) (last (split-at (inc idx) items))))))
+    (swap! trolley-state update-in [:items]
+           remove-first :id id)))
+
+(defn- group-items
+  [items]
+  (let [grouped (group-by :id items)]
+    (map (fn [[id items]]
+           (assoc (first items) :count (count items)))
+         grouped)))
 
 (defn trolley-list-contents
   [trolley-state]
@@ -120,13 +137,13 @@
     (if (empty? (:items @trolley-state))
       [bootstrap/list-group-item {:key 0 :list-item true}
        [:em "Nothing in your trolley, yet!"]]
-      (map-indexed
-       (fn [idx item]
-         ^{:key idx}
-         [trolley-item idx item
-          (partial remove-item-from-trolley trolley-state idx)
+      (map
+       (fn [item]
+         ^{:key (:id item)}
+         [trolley-item item
+          (partial remove-item-from-trolley trolley-state (:id item))
           #(swap! trolley-state update-in [:items] conj item)])
-       (:items @trolley-state)))]])
+       (group-items (:items @trolley-state))))]])
 
 (defn select-items-view
   [trolley-state progress-fn]
