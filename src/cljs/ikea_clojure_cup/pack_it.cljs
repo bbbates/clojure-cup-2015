@@ -45,7 +45,7 @@
                              :on-click start-over-fn} "Start over"]]
          [:h3 "Boot size:"]
          [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
-         [:h3 "Packages:"]
+         [:h3 "Flatpacks:"]
          [:ol.list-inside (map (fn [{:keys [width height length]}] [:li (str width "cm x " height "cm x " length "cm")]) (mapcat :packages (-> @all-state :trolley :items)))]
          [:h3 "Preview:"]
          (if (= :no (:result result-state))
