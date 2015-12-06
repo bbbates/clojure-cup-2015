@@ -46,7 +46,24 @@
     (merge {:result result
             :details packing-details}
            (when (= :partial result)
-             {:missing (get-missing packages packing-details)}))))
+             {:missing (get-missing packages packing-details)})
+           (when-not (= :no result)
+             {:preview {:bins bins :items items}}))))
+
+(defn transform-preview [body]
+  (-> body
+      (cs/replace #"button" "button class=\"btn btn-danger\"")
+      (cs/replace #"</head>" "<link href=\"/css/ikea-helper.css\" rel=\"stylesheet\" type=\"text/css\"></head>")
+      (cs/replace #"style=\"position: absolute; top: \d+px; z-index: 100\"" "")
+      (cs/replace #"font-weight: bold;" "")
+      (cs/replace #"scene.fog.color, 1" "0x000000, 0")
+      (cs/replace #"antialias: false" "antialias: false, alpha: true")
+      (cs/replace #"legend.style.color = \"#ffffff\"" "legend.style.color =\"#000\"")
+      (cs/replace #"contents legend" "Flat packs legend:")))
+
+(defn preview [bins items]
+  (let [response (http-kit/post (format "http://www.packit4me.com/api/call/preview?bins=%s&items=%s&binId=0" bins items))]
+    (transform-preview (:body @response))))
 
 
 ;; (pack {:bins [{:id "car" :depth 2 :width 2 :height 2}]

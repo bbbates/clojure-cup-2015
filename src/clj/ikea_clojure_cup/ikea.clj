@@ -27,7 +27,15 @@
 
   (POST* "/pack" []
          :body [pack-query {s/Keyword s/Any}]
-         (let [transformed-params {:bins [(merge {:id "car"}
+         (let [transformed-params {:bins [(merge {:id "0"}
                                                  (-> pack-query :fleet :vehicles first))]
                                    :products (-> pack-query :trolley :items)}]
-           (ok (pack/pack transformed-params)))))
+           (ok (pack/pack transformed-params))))
+
+  (GET* "/preview" []
+        :query-params [bins :- s/Str
+                       items :- s/Str]
+        (update-in (ok (pack/preview bins items))
+           [:headers] assoc "content-type" "text/html;charset=ISO-8859-1")))
+
+
