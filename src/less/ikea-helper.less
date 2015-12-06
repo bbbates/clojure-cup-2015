@@ -224,12 +224,27 @@ You also need to include this conditional style in the <head> of your HTML file 
 
 .enter-car-info {
   main {
-      .make-row();
+    .make-row();
     .entry {
       .make-xs-column(12);
       .make-sm-column(6);
       nav {
         margin-bottom: 10px;
+      }
+
+      .examples {
+        ul {
+          li {
+            display: inline;
+            &:after {
+              content: " | ";
+            }
+            &:last-of-type:after {
+              content: "";
+            }
+          }
+
+        }
       }
     }
     > .preview {

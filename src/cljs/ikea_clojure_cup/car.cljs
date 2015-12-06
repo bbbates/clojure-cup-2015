@@ -9,6 +9,21 @@
   [bootstrap/panel {:header "You and which army?"}
    [:p "This feature is coming soon..."]])
 
+(def example-vehicles
+  [{:name "Mazda 3 2005 Sedan" :dims {:width 90.2 :height 56.6 :depth 96.1}}
+   {:name "BMW 1Series 2011" :dims {:width 72.6 :height 47.2 :depth 90.4}}
+   {:name "VW Passat Highline Estate 2010" :dims {:width 99.1 :height 76.2 :depth 113.5}}
+   {:name "Nissan Pathfinder 4x4" :dims {:width 118.7 :height 173.3 :depth 88.8}}])
+
+(defn- example-dimensions
+  [single-state]
+  [:div.examples
+   [:p "...or use an example vehicle:"]
+   [:ul
+    (for [{:keys [name dims]} example-vehicles]
+      [:li {:key name}
+       [:a {:href "#" :on-click #(reset! single-state dims)} name]])]])
+
 (defn- single-vehicle-entry
   [single-state]
   [:div.single-vehicle-entry
@@ -30,7 +45,8 @@
                         :id :depth
                         :addon-after "cm"
                         :label "Depth of boot/trunk from rear of vehicle"}]]
-     single-state]]])
+     single-state]
+    [example-dimensions single-state]]])
 
 (defn- enough-data?
   [vehicles]
@@ -42,7 +58,7 @@
 (defn- vehicle-get
   ([car-state idx]
    (merge
-    {:width 0 :height 0 :depth 0}
+    {:width 100 :height 100 :depth 100}
     (get-in @car-state [:vehicles idx])))
   ([car-state idx v]
    (swap! car-state assoc-in [:vehicles idx] v)))
