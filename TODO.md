@@ -10,7 +10,6 @@
 ----------------
 - button styling
 - about/instructions
-- Think of name!
 
 ----------------
 - Step 1
@@ -18,7 +17,6 @@
 - Page layouts - scrolling, overflows etc.
 - After selecting item from autocomplete, clear text box
 - Preview of packages on right hand side (2d trolley)
-- group multiple of the same item
 - Wish list import
 - Add examples e.g. Example products to populate their trolley with (randomly selected maybe?)
 
