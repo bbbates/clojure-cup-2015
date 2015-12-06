@@ -3,6 +3,7 @@
             [cljs.core.async :as async]
             [reagent.core :as reagent :refer [atom]]
             [reagent-forms.core :refer [bind-fields]]
+            [clojure.string :as cs]
             [ikea-clojure-cup.autocomplete]
             [ikea-clojure-cup.regions :refer [region-state]]
             [ikea-clojure-cup.bootstrap :as bootstrap])
@@ -52,7 +53,7 @@
       [bind-fields
        [:div {:field :autocomplete
               :id :term
-              :input-placeholder "Search for IKEA Product by Name or Department"
+              :input-placeholder "Search for IKEA Product by Name"
               :data-source fetch-search-results
               :input-class "form-control"
               :list-class "typeahead-list"
@@ -66,7 +67,9 @@
   [packages]
   [bootstrap/pop-over {:id "package-popover" :title (str (count packages) " flatpacks")
                        :placement :bottom}
-   "This product is packaged in " (count packages) " flatpacks or boxes."])
+   "This product is packaged in " (count packages) " flatpacks or boxes:"
+   [:ul
+    (map (fn [{:keys [width height length]}] [:li (str width "cm x " height "cm x " length "cm")]) packages)]])
 
 (defn package-total-view
   [item-container packages on-click-fn]
