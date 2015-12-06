@@ -160,9 +160,9 @@
    [:footer
     [bootstrap/button-toolbar
     [bootstrap/button {:bs-size :lg
-                       :bs-style :danger
-                       :on-click #(swap! trolley-state assoc :items [])} "Clear trolley"]
-    [bootstrap/button {:bs-size :lg
                        :bs-style :primary
                        :disabled (empty? (:items @trolley-state))
-                       :on-click progress-fn} "Continue"]]]])
+                       :on-click progress-fn} "Continue"]
+     [bootstrap/button {:bs-size :lg
+                       :bs-style :danger
+                       :on-click #(swap! trolley-state assoc :items [])} "Clear trolley"]]]])

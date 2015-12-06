@@ -31,13 +31,13 @@
 
 (defn- region-confirm
   [region-state]
-  [bootstrap/button {:bs-size :lg :on-click
+  [bootstrap/button {:bs-size :lg :bs-style :danger :on-click
                      #(swap! region-state assoc :region (:sel-region @region-state))} "Confirm"])
 
 (defn- region-selection-copy
   [region-state]
   [:div
-   [:h3 "Welcome to the Ikea Transport Planner" [:small [:em "(Proper name pending)"]]]
+   [:h3 "Welcome to the ITEA Transport Planner" [:small [:em "(Proper name pending)"]]]
    [:p "Before you begin, select your closest IKEA region."]])
 
 (defn region-modal
