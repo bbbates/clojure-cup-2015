@@ -45,7 +45,8 @@
                              :on-click start-over-fn} "Start over"]]
          [:h3 "Boot size:"]
          [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
-         [:h3 "Packages:"]
+
+         [:h3 "Flatpacks:"]
          [:ol.list-inside
           (map-indexed
            (fn [idx {:keys [width height length] :as package}]
@@ -61,3 +62,4 @@
             [:div
              [:p "In the box below, you can pan around and zoom in and out to see how to stack your packages."]
              [:iframe {:width "555" :height "555" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]]]])]])))
+
