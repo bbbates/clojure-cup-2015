@@ -1,6 +1,11 @@
 # TODO
 
 ----------------
+- Build
+----------------
+- Use minified js
+
+----------------
 - All screens
 ----------------
 - button styling
@@ -16,7 +21,6 @@
 - group multiple of the same item
 - Wish list import
 - Add examples e.g. Example products to populate their trolley with (randomly selected maybe?)
-- Display list of packages in trolley contents
 
 ----------------
 - Step 2
