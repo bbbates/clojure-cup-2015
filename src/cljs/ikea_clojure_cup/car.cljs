@@ -64,9 +64,9 @@
        [:footer
         [bootstrap/button-toolbar
         [bootstrap/button {:bs-size :lg
-                           :bs-style :danger
-                           :on-click #(swap! car-state assoc :vehicles [])} "Reset fleet"]
-        [bootstrap/button {:bs-size :lg
                            :bs-style :primary
                            :disabled (not (enough-data? (:vehicles @car-state)))
-                           :on-click progress-fn} "Will it fit?"]]]])))
+                           :on-click progress-fn} "Will it fit?"]
+        [bootstrap/button {:bs-size :lg
+                           :bs-style :danger
+                           :on-click #(swap! car-state assoc :vehicles [])} "Reset fleet"]]]])))

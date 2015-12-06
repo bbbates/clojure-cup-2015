@@ -26,14 +26,16 @@
      [:li "1. It fits!  You'll fit ALL of the packages for your products in your car!"]
      [:li "2. It kinda fits!  You'll fit SOME of the packages in your car but may have to get creative or say goodbye to others."]
      [:li "3. It does not fit!  You'll fit NONE of the packages for your products in your car."]]]
-   [bootstrap/button {:bs-size :lg :href "/"} "Try it!"]])
+   [bootstrap/button {:bs-size :lg :bs-style :danger :href "/"} "Try it!"]])
 
 (defn current-page []
   [:div
    [:div#wrap
     [bootstrap/nav-bar
      [bootstrap/nav-bar-brand
-      [:a {:title "IKEA" :href "/"} "IKEA"]]
+      [:div
+      [:img {:src "img/iflogs-sm.png"}]
+      [:a {:title "IFLOGS" :href "/"} "IKEA Fleet Logistics System" ]]]
      [bootstrap/nav {:pull-right true}
       [bootstrap/nav-item {:title "Change region"
                            :on-click #(swap! regions/region-state dissoc :region)}
