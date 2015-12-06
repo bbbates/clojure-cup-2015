@@ -22,6 +22,8 @@
 (def row (reagent/adapt-react-class js/ReactBootstrap.Row))
 (def col (reagent/adapt-react-class js/ReactBootstrap.Col))
 
+(def alert (reagent/adapt-react-class js/ReactBootstrap.Alert))
+
 (def nav (reagent/adapt-react-class js/ReactBootstrap.Nav))
 (def nav-item (reagent/adapt-react-class js/ReactBootstrap.NavItem))
 (def nav-bar (reagent/adapt-react-class js/ReactBootstrap.Navbar))

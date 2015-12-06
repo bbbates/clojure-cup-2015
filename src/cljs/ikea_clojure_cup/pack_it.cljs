@@ -17,12 +17,12 @@
   [all-state progress-fn recalc-progress-fn start-over-fn]
   (fn [_ _]
     (let [result-state (:results @all-state)]
-      [:section.select-items
+      [:section.pack-it
        [:heading
         [:h2 "Step 3"]
-        [:h3 "Results:"]]
-       [:main.select-items-content
-        [:div.search
+        [:h3 "Results"]]
+       [:main.pack-it-content
+        [:div.results
          (case (:result result-state)
            :yes [:div
                  [:img {:src "img/itFits.png"}]]
@@ -44,11 +44,12 @@
                              :href "/"
                              :on-click start-over-fn} "Start over"]]
          [:h3 "Boot size:"]
-         [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]
-         [:h3 "Preview:"]
-         (if (= :no (:result result-state))
-           [:p "N/A"]
-           [:div
-            [:p.hidden-xs "In the below box, you can pan around and zoom in and out to see how to stack your packages."]
-            [:iframe.hidden-xs {:width "555" :height "555" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]
-            [:p.visible-xs "3D preview showing how stack the packages is not available when viewing on small screen devices. Please try again on a larger screen."]])]]])))
+         [:p (str (cs/join "cm x " (-> @all-state :fleet :vehicles first vals)) "cm")]]
+        (when-not (= :no (:result result-state))
+          [:div.preview
+           [bootstrap/alert {:id :small-device-alert :bs-style :info}
+            "3D preview showing how stack the packages is not available when viewing on small screen devices. Please try again on a larger screen."]
+           [:div.three-dee-view
+            [:div
+             [:p "In the box below, you can pan around and zoom in and out to see how to stack your packages."]
+             [:iframe {:width "555" :height "555" :src (str "/ikea/preview?bins=" (-> result-state :preview :bins) "&items=" (-> result-state :preview :items))}]]]])]])))
