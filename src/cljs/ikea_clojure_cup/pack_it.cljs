@@ -40,6 +40,7 @@
                                [:span.text-muted (:desc product)]] )
                             (:missing result-state))]]])
          [:h3 "Trolley contents:"]
+
          [select-items/trolley-list-contents (reagent/cursor all-state [:trolley])]
 
          [bootstrap/button-toolbar

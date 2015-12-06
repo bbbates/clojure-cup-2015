@@ -53,7 +53,7 @@
                               :on-click #(swap! regions/region-state dissoc :region)}
           (str "Region: " (get-in @regions/region-state [:region :name]))]
          [bootstrap/nav-item {:title "About" :href "/about"} "About"]
-         [bootstrap/nav-item {:title "Vote for Us" :href "http://clojurecup.com/teams/"} "Vote for Us"]
+         [bootstrap/nav-item {:title "Vote for Us" :target "_blank" :href "http://clojurecup.com/teams/"} [bootstrap/glyph {:glyph :thumbs-up}] " Vote for Us"]
          [bootstrap/nav-item {:title "Start over" :bs-style :danger
                               :href "/"
                               :on-click tool/start-over} "Start over"]]]])))
@@ -69,7 +69,7 @@
     "IFLOGS is not endorsed or affiliated with IKEA."
     [:br]
     [:sup "©"]
-    [:a {:href "http://www.icm-consulting.com.au/about-us/" :target "_blank" :rel "external"} "ICM Consulting Pty Ltd B.V 2010"]
+    [:a {:href "http://www.icm-consulting.com.au/home" :target "_blank" :rel "external"} "ICM Consulting Pty Ltd B.V 2010"]
     [:div.serial-text.pull-right.hidden-xs "AA-498638-1"]
     [:div.serial-number.pull-right.hidden-xs (first (shuffle (range 10000 20000)))]]])
 
