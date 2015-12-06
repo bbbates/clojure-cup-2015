@@ -51,7 +51,7 @@
                         :aria-label "close"
                         :role "alert"
                         :on-click #(swap! tool-state assoc :shown-intro? true)}
-      [:span {:aria-hidden true} "⨉"]]
+      [:span {:aria-hidden true} "x"]]
      [:p common/welcome-note]]))
 
 (defn tool-view

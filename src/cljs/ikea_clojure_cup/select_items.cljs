@@ -114,7 +114,7 @@
      [:div
       [package-total-view (reagent/current-component) packages on-click-fn]
       (when-not (and count (>= 1 count))
-        [:h2 "⨉" count])]]
+        [:h2 "x" count])]]
     [:div.preview
      [bootstrap/thumbnail {:src image-src :responsive true}]]]])
 
