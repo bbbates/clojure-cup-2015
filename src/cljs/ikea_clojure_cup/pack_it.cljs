@@ -61,9 +61,8 @@
              (fn [idx {:keys [width height length pkg-id] :as package}]
                [:li {:key idx}
                 [:div {:class-name (if (package-ids-missing pkg-id) "not-ok" "ok")}
-                [bootstrap/glyph {:glyph (if (package-ids-missing pkg-id) :remove :ok) }]
-                (str " " width "cm x " height "cm x " length "cm " )
-                [bootstrap/label name]]])
+                [bootstrap/glyph {:glyph (if (or (= :no (:result result-state)) (package-ids-missing pkg-id)) :remove :ok)}]
+                (str " " width "cm x " height "cm x " length "cm")]])
              (mapcat :packages (-> @all-state :trolley :items))))]]
 
         (when-not (= :no (:result result-state))

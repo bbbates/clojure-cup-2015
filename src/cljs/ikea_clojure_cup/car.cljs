@@ -13,7 +13,7 @@
   [{:name "Mazda 3 2005 Sedan" :dims {:width 90.2 :height 56.6 :depth 96.1}}
    {:name "BMW 1Series 2011" :dims {:width 72.6 :height 47.2 :depth 90.4}}
    {:name "VW Passat Highline Estate 2010" :dims {:width 99.1 :height 76.2 :depth 113.5}}
-   {:name "Nissan Pathfinder 4x4" :dims {:width 118.7 :height 173.3 :depth 88.8}}])
+   {:name "Nissan Pathfinder 4x4" :dims {:width 116.5 :height 88.7 :depth 44.0}}])
 
 (defn- example-dimensions
   [single-state]
