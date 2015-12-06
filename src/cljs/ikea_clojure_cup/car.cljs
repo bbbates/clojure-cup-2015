@@ -57,9 +57,11 @@
 
 (defn- vehicle-get
   ([car-state idx]
-   (merge
-    {:width 150 :height 100 :depth 100}
-    (get-in @car-state [:vehicles idx])))
+   (or (get-in @car-state [:vehicles idx])
+       (do
+         (vehicle-get car-state idx {:width 150 :height 100 :depth 100})
+         (println ">>>>>" @car-state)
+         (get-in @car-state [:vehicles idx]))))
   ([car-state idx v]
    (swap! car-state assoc-in [:vehicles idx] v)))
 
